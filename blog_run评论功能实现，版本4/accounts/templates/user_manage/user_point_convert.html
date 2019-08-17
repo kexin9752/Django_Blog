@@ -1,0 +1,161 @@
+{% extends 'user_base/user_base.html' %}
+{% block title %}
+    <title>我的积分 - 冠美博客</title>
+{% endblock %}
+
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+
+<!--导航结束-->
+
+<!--/Header-->
+
+
+    <!--/左侧导航-->
+    
+    <!--右侧内容-->
+{% block content %}
+    <div class="member-redpack fr w955">
+      
+      <!--积分兑换-->
+      <h3 class="operate-title mt20">积分兑换</h3>
+      <div class="operate-items mt20">
+          <a class="j-item now" href="{% url 'accounts:user_point_convert' %}">积分兑换</a>
+          <a class="j-item " href="{% url 'accounts:user_point_list' %}">积分明细</a>
+      </div>
+      <div class="orders j-orders" style="display: block;">
+        
+          <link rel="stylesheet" href="/static/css/validate.css" />
+          <script type="text/javascript" src="/static/scripts/jquery/jquery.form.min.js"></script>
+          <script type="text/javascript" src="/static/scripts/jquery/Validform_v5.3.2_min.js"></script>
+          <script type="text/javascript">
+			$(function(){
+			  //初始化表单
+			  AjaxInitForm('#pointForm', '#btnSubmit', 1, '#turl');
+			});
+		  </script>
+          <input id="hideAmount" name="hideAmount" type="hidden" value="{{ user.integral }}" />
+          <input id="hideCashrate" name="hideCashrate" type="hidden" value="10" />
+
+          <form>
+          {% csrf_token %}
+
+          <div class="form-box">
+            <dl>
+              <dt>账户余额：</dt>
+              <dd>目前账户积分:<b class="red">{{ user.integral }}</b>分，可用金额：<b class="red">{{ user.balance }}</b>枚</dd>
+            </dl>
+            <dl>
+              <dt>兑换说明：</dt>
+              <dd>积分兑换最少金额为1枚，兑换比例为：1枚等于10个积分</dd>
+              <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  目前金额可兑换:<span style="color: red">
+                      &nbsp;{{ be_integral }}&nbsp;积分
+                  </span></dd>
+            </dl>
+            <dl>
+              <dt>积分兑换：</dt>
+{#              {% verbatim %}#}
+              <dd id="app">
+                  <input name="balance" id="balance" style="width: 200px" maxlength="4" type='text' onkeyup="numConvert('#balance')"/>
+                  <!--(this.v=function(){this.value=this.value.replace(/[^0-9]+/,'');}).call(this)" onblur="this.v();" v-model="message -->
+<!--               <input name="balance" min="1" max="999"  id="txtAmount" type="number" class="input small" /> -->
+              金额转换成 <strong class="red" id="convertPoint"></strong> 积分
+                  <span id="balance_msg" class=""></span>
+              </dd>
+{#              {% endverbatim %}#}
+            </dl>
+            <dl>
+              <dt>验证用户密码：</dt>
+              <dd>
+                <input name="password" id="txtPassword" type="password" class="input txt" datatype="*6-20" nullmsg="请输入密码" sucmsg=" " />
+                <span id="password_msg" class=""></span>
+              </dd>
+            </dl>
+            <dl>
+              <dt></dt>
+              <dd class="feed-sub"><input name="btnSubmit" id="btnsub" type="button" class="btn " value="确认兑换" /></dd>
+            </dl>
+          </div>
+          </form>
+{#          <input id="turl" name="turl" type="hidden" value="/user/point/convert.html" />#}
+        
+      </div>
+      <!--/积分兑换-->
+      
+      
+    </div>
+{% endblock %}
+    <!--/右侧内容-->
+
+
+    <!--Footer-->
+    <!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+
+<!---END 底部开始-->
+    <!--/Footer-->
+{% block footjs %}
+
+    <script type="text/javascript">
+        {#function noFue(val){#}
+    	{#	document.getElementById('balance').value = parseInt(val) >= 0 ? val : 0;#}
+	    {# }#}
+
+        $(function () {
+            $(".myintegral").addClass("demo-dd-a-now");
+        });
+
+        $('#btnsub').click(function () {
+            let balance = $('#balance').val();
+            let password = $('#txtPassword').val();
+            $.ajax({
+                url:'{% url "accounts:user_point_convert" %}',
+                type:'post',
+                data:{
+                    balance:balance,
+                    password:password,
+                    csrfmiddlewaretoken:'{{ csrf_token }}'
+                },
+                success:function (rest) {
+                    if(rest.params === 'balance'){
+                        $('#balance_msg').attr('class','Validform_wrong');
+                        $('#balance_msg').text(rest.data);
+                        $('#password_msg').text('');
+                    }else if (rest.params === 'password') {
+                        $('#password_msg').attr('class','Validform_wrong');
+                        $('#password_msg').text(rest.data);
+                        $('#balance_msg').text('');
+                    }else {
+                        alert('恭喜您,兑换成功');
+                        location.href="{% url "accounts:user_point_convert" %}";
+                    }
+                }
+            })
+        })
+    </script>
+    <script type="text/javascript" src="/static/js/vue.min.js"></script>
+    <script>
+    {#    var Vue = new Vue({#}
+    {#    el:'#app',#}
+    {#    data:{#}
+    {#        message:"123",#}
+    {#    }#}
+    {# })#}
+    </script>
+
+
+{% endblock %}
