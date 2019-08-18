@@ -1,0 +1,275 @@
+{% extends 'user_base/user_base.html' %}
+{% load accounts_extras %}
+{% block title %}
+    <title>会员中心 - KevIn`s Blog</title>
+{% endblock %}
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+
+<!--导航结束-->
+
+    <!--/Header-->
+
+        <!--<dl class="menu-dl fl wfs">
+            <dt class="menu-dt service fl wfs"><i></i>售后服务</dt>
+            <dd class="fl wfs">
+                <p>
+                    <a href="user.php?act=product_knowledge">产品知识库</a></p>
+                <p>
+                    <a href="user.php?act=ask_list">问答列表</a></p>
+                <p>
+                    <a href="user.php?act=question">发起提问</a></p>
+            </dd>
+        </dl>-->
+
+            <!--/左侧导航-->
+            <!--右侧内容-->
+            {% block content %}
+            <div class="member-index fr w955 ">
+                
+                <!--修改资料-->
+                <link rel="stylesheet" href="/static/css/validate.css" />
+                <script type="text/javascript" charset="utf-8" src="/static/scripts/jquery/jquery.form.min.js"></script>
+                <script type="text/javascript" charset="utf-8" src="/static/scripts/jquery/Validform_v5.3.2_min.js"></script>
+                <script type="text/javascript" charset="utf-8" src="/static/scripts/jquery/PCASClass.js"></script>
+                <script type="text/javascript" charset="utf-8" src="/static/scripts/datepicker/WdatePicker.js"></script>
+                <script type="text/javascript">
+                    $(function () {
+                        $(".mytitle").addClass("demo-dd-a-now");
+                    })
+                </script>
+                <script type="text/javascript">
+                    $(function () {
+                        //初始化表单
+                        AjaxInitForm('#infoForm', '#btnSubmit', 1);
+                        //初始化地区
+                        var mypcas = new PCAS("txtProvince,所属省份", "txtCity,所属城市", "txtArea,所属地区");
+                        var areaArr = ("").split(",");
+                        if (areaArr.length == 3) {
+                            mypcas.SetValue(areaArr[0], areaArr[1], areaArr[2]);
+                        }
+                    });
+                </script>
+                <h3 class="operate-title mt20">
+                    个人资料</h3>
+                <div class="operate-items mt20">
+                    <a class="j-item now" href="{% url 'accounts:user_center_proinfo' %}">个人资料</a> <a class="j-item "
+                        href="{% url 'accounts:user_center_password' %}">修改密码</a>
+                </div>
+                <div class="orders j-orders" style="display: block;">
+{#                二者不可兼得，取生而舍id也，哎哎哎哎哎哎哎哎哎哎啊    id="infoForm"#}
+{#                    <form name="infoForm" id="proinfo" action="{% url 'accounts:user_center_proinfo' %}" method="post">#}
+                    <form>
+                    {% csrf_token %}
+                    <div class="form-box">
+                        <dl>
+                            <dt>用户名：</dt>
+                            <dd>
+                                {{ user.username }}</dd>
+                        </dl>
+                        <dl>
+                            <dt>昵称：</dt>
+                            <dd>
+                                <input name="nickname" id="nickname" type="text" class="input txt form-control" value="{{ user.nickname }}" datatype="*"/></dd>
+                        </dl>
+
+                        <dl>
+                            <dt>真实姓名：</dt>
+                            <dd>
+                                <input name="real_name" id="real_name" type="text" class="input txt form-control"
+                                    maxlength="30" value="{{ user_profile.real_name|default_if_none:'' }}" /></dd>
+                        </dl>
+
+                        <dl>
+                            <dt>性别：</dt>
+                            <dd>
+                                
+                                <label class="radio">
+                                    <input name="gender" class="gender" type="radio" value="1" {% if user_profile.gender == 1 %}checked="checked"{% endif %} />男</label>
+                                <label class="radio">
+                                    <input name="gender" class="gender" type="radio" value="2" {% if user_profile.gender == 2 %}checked="checked"{% endif %}/>女</label>
+                                <label class="radio">
+                                    <input name="gender" class="gender" type="radio" value="3" datatype="*" {% if user_profile.gender == 3 %}checked="checked"{% endif %}/>保密</label>
+                                
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>年龄：</dt>
+                            <dd>
+                                
+                                <input name="age" id="age" type="text" class="input txt form-control"
+                                    maxlength="30" value="{{ user_profile.age | datefmt | default_if_none:'' }}" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'});" />
+                                <span id="age_msg" class=""></span>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>邮箱：</dt>
+                            <dd>
+                                <input name="email" id="email" type="text" class="input txt form-control" value="{{ user.email|default_if_none:'' }}" datatype="e"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>手机：</dt>
+                            <dd>
+                                <input name="phone_no" id="phone_no" type="text" class="input txt form-control"
+                                    value="{{ user_profile.phone_no|default_if_none:'' }}" datatype="m" />
+                                <span id="phone_msg" class=""></span>
+{#                            <span {% if form.non_field_errors %}class="Validform_wrong" {% else %}class="Validform_checktip"{% endif %} >{{ form.non_field_errors }}</span>#}
+                            </dd>
+                        </dl>
+
+                        <dl>
+                            <dt>所属地区：</dt>
+                            <dd>
+                                <select id="txtProvince" name="province" class="select" select-data="{{ user_profile.province|default_if_none:'' }}">
+                                </select>
+                                <select id="txtCity" name="city" class="select" value="{{ user_profile.city|default_if_none:'' }}">
+                                </select>
+                                <select id="txtArea" name="area" class="select" datatype="*" value="{{ user_profile.area|default_if_none:'' }}">
+                                </select>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>详细地址：</dt>
+                            <dd>
+                                <input name="address" id="address" type="text" class="input txt form-control"
+                                    maxlength="250" value="{{ user_profile.address|default_if_none:'' }}" /></dd>
+                        </dl>
+                        <dl>
+                            <dt>在线QQ：</dt>
+                            <dd>
+                                <input name="qq" id="qq" type="text" class="input txt form-control" maxlength="20"
+                                    value="{{ user_profile.qq|default_if_none:'' }}" /></dd>
+                        </dl>
+{#                        <dl>#}
+{#                            <dt>MSN账户：</dt>#}
+{#                            <dd>#}
+{#                                <input name="txtMsn" id="txtMsn" type="text" class="input txt form-control" maxlength="20"#}
+{#                                    value="" /></dd>#}
+{#                        </dl>#}
+                        <dl>
+                            <dt></dt>
+                            <dd class="feed-sub">
+                                <input id="btn123" type="button" class="btn btn-inverse" value="确认修改" /></dd>
+                        </dl>
+                    </div>
+                    </form>
+                </div>
+                <!--/修改资料-->
+                
+            </div>
+            {% endblock %}
+            <!--/右侧内容-->
+
+    <!--Footer-->
+    <!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+{% block footjs %}
+{#    <script type="text/javascript" src="/static/js/jquery.2.1.4.min.js"></script>#}
+    <script>
+    {#var sel_val = $('#txtProvince').attr('select-data');#}
+    {#console.log(sel_val);#}
+    {#$("#txtProvince option[value='湖北省']").prop("selected",true);#}
+    {#$(document).ready(function(){#}
+    {#    $("#txtProvince option[text=湖北省]").attr("selected", "selected");#}
+    {# });#}
+    {#$("#txtProvince option[text=湖北省]").attr("selected", "selected");#}
+    var gender = 2;
+    $('.gender').click(function () {
+       gender = $(this).val()
+    });
+    $('#btn123').click(function () {
+        let nickname = $('#nickname').val();
+        let email = $('#email').val();
+        let real_name = $('#real_name').val();
+        let age = $('#age').val();
+        let phone_no = $('#phone_no').val();
+        let txtProvince = $('#txtProvince').val();
+        let txtCity = $('#txtCity').val();
+        let txtArea = $('#txtArea').val();
+        let address = $('#address').val();
+        let qq = $('#qq').val();
+        let sendData = {
+            nickname:nickname,
+            email:email,
+            real_name:real_name,
+            gender:gender,
+            age:age,
+            phone_no:phone_no,
+            txtProvince:txtProvince,
+            txtCity:txtCity,
+            txtArea:txtArea,
+            address:address,
+            qq:qq,
+            csrfmiddlewaretoken:'{{ csrf_token }}'
+        };
+        $.ajax({
+            url:'{% url "accounts:user_center_proinfo" %}',
+            type:'post',
+            data:sendData,
+            success:function (rest) {
+                if(rest.data != null || rest.age != null){
+                    console.log(rest);
+                    $('#age_msg').attr('class','Validform_wrong');
+                    $('#age_msg').text(rest.age);
+                    $('#phone_msg').attr('class','Validform_wrong');
+                    $('#phone_msg').text(rest.data)
+                }else {
+                    alert('个人资料修改成功');
+                    $('#age_msg').text('');
+                    $('#phone_msg').text('')
+                }
+            },
+            error:function (rest) {
+                alert('no')
+            }
+        })
+
+    });
+
+
+
+
+
+
+    {#$('#phone_no').click(function () {#}
+    {#        $('#phone_no').blur(function () {#}
+    {#            let value = $('#phone_no').val();#}
+    {#            let params = $('#phone_no').attr('name');#}
+    {#            let sendData = {csrfmiddlewaretoken:'{{ csrf_token }}',params:params,phone_no:value};#}
+    {#            $.ajax({#}
+    {#                url:"{% url 'accounts:user_center_proinfo' %}",#}
+    {#                type:'post',#}
+    {#                data:sendData,#}
+    {#                success:function (rest) {#}
+    {#                    if(rest.data != null){#}
+    {#                        $('#phone_msg').addClass('Validform_wrong');#}
+    {#                        $('#phone_msg').text(rest.data)#}
+    {#                    }else {#}
+    {#                        $('#phone_msg').addClass('Validform_checktip');#}
+    {#                        $('#phone_msg').text('验证通过')#}
+    {#                    }#}
+    {#                },#}
+    {#                error:function (rest) {#}
+    {#                    alert('no')#}
+    {#                }#}
+    {#             })#}
+    {#        })#}
+    {#    });#}
+    </script>
+{% endblock %}
+
+
+<!---END 底部开始-->
+    <!--/Footer-->
+

@@ -1,0 +1,348 @@
+<aside class="myaside">
+    <!--关注我-->
+    <div class="focus-me bg-color animation-div">
+            <h4 class="index-title"><i class="el-heart fa fa-heart"></i>关注我<small>Focus Me</small></h4>
+		    <div class="xiangguan">
+				    <div><a class="benbo" href="javascript:;" target="_blank"><i class="icon-cloud-download"></i></a><span>模板下载</span></div>
+				    <div><a class="taobao" href="javascript:;" target="_blank"><i class="icon-basket-loaded"></i></a><span>淘宝店铺</span></div>
+				    <div><a class="side-fx"><i class="icon-action-redo"></i></a><span>分享本博</span></div>
+				    <div><a class="mail-btn" href="javascript:;"><i class="icon-envelope"></i></a><span>订阅我</span></div>
+		    </div>
+		    <div class="mail-dy">
+			    <form action="http://list.qq.com/cgi-bin/qf_compose_send" method="post" target="_blank">
+				    <span>订阅</span>
+				    <input name="to" type="text" placeholder="输入邮箱点击订阅吧" onfocus="this.placeholder=''" onblur="this.placeholder='输入邮箱点击订阅吧'">
+				    <i class="icon-envelope el-envelope"><input value=" " type="submit"></i>
+			    </form>
+			    <i class="fa fa-times el-remove fx-close"></i>
+		    </div>
+		    <div class="bd-fx side-bdfx ">
+			    <i class="fa fa-times el-remove fx-close"></i>
+			    <ul class="bdsharebuttonbox bdshare-button-style1-32" data-bd-bind="1472956810753">
+				    <li><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></li>
+				    <li><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a></li>
+				    <li><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></li>
+				    <li><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a></li>
+			    </ul>
+                <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "32" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+		    </div>
+        </div>
+    <style>
+            #cnzz_stat_icon_1260419029 a{display:none;}
+            .cnzz_a1{    display: block;font-weight: bold;line-height: 18px;font-size:16px;}
+            .cnzz_load{display:inline-block;width:15px;height:15px;background:url(/static/images/loading-small.gif)no-repeat center;background-size:100%;}
+        </style>
+    <div class="web-author bg-color animation-div">
+		    <div class="author-tx">
+                {% if not user %}
+                <a class="img-circle" href="{% url 'accounts:user_login' %}" title="还未登录，快去登录吧">
+
+                        <img class="img-circle" src="/static/picture/ava.gif">
+
+			    </a>
+                {% else %}
+			    <a class="img-circle" href="{% url 'accounts:user_center_index' %}" title="点击查看详细信息">
+
+                        <img class="img-circle" src="/static/picture/ava.gif">
+
+			    </a>
+                {% endif %}
+		    </div>
+
+
+            <div class="author-name" style="text-align: center;">
+                {% if not user %}
+                <a href="{% url 'accounts:user_login' %}"><span class="blue-text">登录</span>&nbsp;</a>&nbsp;|&nbsp;
+                <a href="{% url 'accounts:user_register' %}"><span class="blue-text">注册</span></a>
+                <p>人生贵知心，定交无暮早</p>
+                {% else %}
+                 <a href="{% url 'accounts:user_center_index' %}"><span class="blue-text">{{ user.username }}</span></a>
+                <p>欢迎来到 &nbsp KevIn`s Blog</p>
+                {% endif %}
+            </div>
+
+		    <div class="data-info">
+			    <ul>
+				    <li><strong id="myday">待定</strong><span>运行天数</span></li>
+				    <li>
+                        <strong id="strong_ip">
+                            <b class="cnzz_load"></b>
+                            <script type="text/javascript">
+                                var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+                                document.write(unescape("%3Cspan id='cnzz_stat_icon_1260419029'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1260419029%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));
+                            </script>
+                        </strong>
+                        <span>今日访问ip</span>
+                    </li>
+				    <li style="display:none"><strong id="myip">待定</strong><span>今日访问ip</span></li>
+				    <li><strong id="newcount">待定</strong><span>文章数量</span></li>
+			    </ul>
+		    </div>
+            <script type="text/javascript">
+                $(function () {
+                    setTimeout(function () {
+                        var cnzz_a = $("#cnzz_stat_icon_1260419029").find("a");
+                        var alen = cnzz_a.length;
+                        for (var k = 0; k <= alen; k++) {
+                            cnzz_a.eq(k).addClass("cnzz_a" + k);
+                        }
+                        $(".cnzz_a0,.cnzz_a2").remove();
+                        var str = $(".cnzz_a1").text();
+                        str = str.substring(8, 12);
+                        $(".cnzz_a1").text(str);
+
+                        if (!$("#cnzz_stat_icon_1260419029").html() == "") {
+                            $(".cnzz_load").remove();
+                            cnzz_a.show();
+                        }
+                    }, 1000)
+                });
+            </script>
+            <!--搜索-->
+            <div class="search animation-div">
+                <div class="form_div">
+	                <div class="search-index">
+			            <input name="keyword" onfocus="lookup(this.value);" type="text" id="keyword" class="form-control search-box fr" onkeydown="if(event.keyCode==13){SiteSearch('/search.html', '#keyword');return false};" placeholder="输入关键字搜索">
+			            <i class="el-search" onclick="SiteSearch('/search.html', '#keyword');"><input value=" " type="submit"></i>
+		            </div>
+                </div>
+            </div>
+            <!--最新更新-->
+            <div class="clos-new bg-color animation-div">
+	            <h4 class="index-title"><i class="el-bulb fa fa-lightbulb-o"></i>最新更新<small>Close New</small></h4>
+	            <ul>
+                    <li><i class="el-cloud fa fa-sun-o"></i><iframe id="tianqi" scrolling="no" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&amp;id=34&amp;icon=1&amp;num=3"></iframe></li>
+
+                    <li><span><i class="el-arrow-up fa fa-paper-plane-o"></i>最近：<font class="blue-text">admin</font> 06-02 13:47</span><a title="汪汪 最后更新了 在在在工 大在">更新了<b class="lable">文章</b></a></li>
+
+                    <li><i class="el-calendar fa fa-calendar"></i>历史上的今天（<a class="orange-text">0</a>）</li>
+                </ul>
+            </div>
+            <!--说说-->
+            <div class="bg-color animation-div">
+	            <h4 class="index-title"><i class="el-headphones icon-earphones"></i>说说<small>Shuo Shuo</small></h4>
+	            <div class="shuo-side">
+		            <ul>
+
+                        <li id="Hots">
+				            <span class="shuobg1"><strong>06-02 </strong></span>
+				            <div>
+                                <a href="/shuo/show-171.html" title="fdfdfafafdf">fdfdfafafdf</a>
+                                <b title="点击量">(10)</b>
+                            </div>
+			            </li>
+
+                        <li id="Hots">
+				            <span class="shuobg2"><strong>09-23 </strong></span>
+				            <div>
+                                <a href="/shuo/show-153.html" title="刚刚收到一条反馈，你是在玩我吧还是在测试">刚刚收到一条反馈，你是在玩我吧还是在测试</a>
+                                <b title="点击量">(67)</b>
+                            </div>
+			            </li>
+
+                        <li id="Hots">
+				            <span class="shuobg3"><strong>09-20 </strong></span>
+				            <div>
+                                <a href="/shuo/show-148.html" title="大晚上的终于将百度编辑器上传图片添加水印弄好了，明天分享下心得">大晚上的终于将百度编辑器上传图片添加水印弄好了，明天分享下心得</a>
+                                <b title="点击量">(73)</b>
+                            </div>
+			            </li>
+
+		            </ul>
+	            </div>
+            </div>
+            <!--推荐图文-->
+            <div class="article-push  bg-color animation-div">
+	            <h4 class="index-title"><i class="el-asl fa fa-fire"></i>推荐图文<small>Push Article</small></h4>
+	            <ul>
+
+                    <li>
+			            <div class="arcimg">
+				            <a href="/news/show-158.html" title="">
+                                <img src="/static/picture/201610111454266343.jpg" alt="中国已进入互害模式，人人逃不脱！" title="中国已进入互害模式，人人逃不脱！">
+                            </a>
+			            </div>
+			            <div class="arc-right">
+				            <h4 class="blue-text"><a href="/news/show-158.html">中国已进入互害模式，人人逃不脱！</a></h4>
+				            <p>你觉得你占了便宜，我觉得我占了便宜，最后谁也没占到便宜，——这就是互害社会生态链中的个人典型心理。互害生态链已经形成，每个人，无论从事什么行业、地位高低、年龄大小，都不可避免地生活在这个生态链里，无法逃脱。衣服装生产者说：我生产的衣服添加了甲醛、PH值、可分…</p>
+				            <ul>
+					            <li><a title="发表于2016-10-11"><i class="el-time icon-calendar"></i>2016-10-11</a></li>
+					            <li><a title="314次浏览"><i class="el-fire icon-fire"></i>314</a></li>
+				            </ul>
+			            </div>
+		            </li>
+
+                    <li>
+			            <div class="arcimg">
+				            <a href="/news/show-149.html" title="">
+                                <img src="/static/picture/201609221724121994.png" alt="汪汪博客再次更新" title="汪汪博客再次更新">
+                            </a>
+			            </div>
+			            <div class="arc-right">
+				            <h4 class="blue-text"><a href="/news/show-149.html">汪汪博客再次更新</a></h4>
+				            <p>此次一共更新了两个功能：1：后台编辑器上传图片添加水印2：查看详情可点击图片进行放大查看更新这两个功能用了两天，怎么说呢时间大部分都在解决点击图片放大查看，原本这个功能是很好解决的，只需要看一下百度编辑器的文档就行了，在它的常见问题就可以看到解决方案，万万没…</p>
+				            <ul>
+					            <li><a title="发表于2016-09-22"><i class="el-time icon-calendar"></i>2016-09-22</a></li>
+					            <li><a title="172次浏览"><i class="el-fire icon-fire"></i>172</a></li>
+				            </ul>
+			            </div>
+		            </li>
+
+                    <li>
+			            <div class="arcimg">
+				            <a href="/news/show-144.html" title="">
+                                <img src="/static/picture/201609181738278456.png" alt="jwplayer兼容主流视频格式播放" title="jwplayer兼容主流视频格式播放">
+                            </a>
+			            </div>
+			            <div class="arc-right">
+				            <h4 class="blue-text"><a href="/news/show-144.html">jwplayer兼容主流视频格式播放</a></h4>
+				            <p>首先我们定义一个视频播放容器#jwplayer和用于jwplayer视频插件播放的#player&lt;div id=&quot;jwplayer&quot; style=&quot;background: transparent !important; margin:0 auto; width:400px; height:270px; overflow:hidden;&quot;&gt;   &lt;div id=&quot;player&quot;&gt;…</p>
+				            <ul>
+					            <li><a title="发表于2016-09-18"><i class="el-time icon-calendar"></i>2016-09-18</a></li>
+					            <li><a title="164次浏览"><i class="el-fire icon-fire"></i>164</a></li>
+				            </ul>
+			            </div>
+		            </li>
+
+	            </ul>
+            </div>
+            <!--文章排行tab-->
+            <div class="mytab bg-color animation-div">
+	            <div class="tab-btn">
+                    <a class="hd-btn tab-active" href="javascript:;" title=""><i class="el-comment-alt icon-bubbles"></i>互动信息</a>
+                    <a class="ph-btn" href="javascript:;" title=""><i class="el-signal icon-bar-chart"></i>文章排行</a>
+                </div>
+	            <ul class="hudong-ul" style="display: block;">
+                    <!--=======查询相册=============-->
+
+                    <li>
+			            <div class="sd-tx">
+				            <a href="/feedback.html" target="_blank" rel="nofollow" title="去 晓晓 的网站看看 ?">
+					            <img src="/static/picture/4.jpg" alt="晓晓" class="img-circle">
+				            </a>
+			            </div>
+			            <div class="sd-name">
+		                    <span><i class="el-user icon-user"></i>晓晓<time>2016-09-22</time></span>
+				            <a class="blue-text comment_txt" href="/feedback.html" title="[Q0]不错,留言标题什么意思">[Q0]不错,留言标题什么意思</a>
+			            </div>
+		            </li>
+
+                    <li>
+			            <div class="sd-tx">
+				            <a href="/feedback.html" target="_blank" rel="nofollow" title="去 背包客 的网站看看 ?">
+					            <img src="/static/picture/22.jpg" alt="背包客" class="img-circle">
+				            </a>
+			            </div>
+			            <div class="sd-name">
+		                    <span><i class="el-user icon-user"></i>背包客<time>2016-09-20</time></span>
+				            <a class="blue-text comment_txt" href="/feedback.html" title="哟西">哟西</a>
+			            </div>
+		            </li>
+
+                    <li>
+			            <div class="sd-tx">
+				            <a href="/feedback.html" target="_blank" rel="nofollow" title="去 小兔子乖乖 的网站看看 ?">
+					            <img src="/static/picture/24.jpg" alt="小兔子乖乖" class="img-circle">
+				            </a>
+			            </div>
+			            <div class="sd-name">
+		                    <span><i class="el-user icon-user"></i>小兔子乖乖<time>2016-09-13</time></span>
+				            <a class="blue-text comment_txt" href="/feedback.html" title="小兔子乖乖，把门开开[ali_4]">小兔子乖乖，把门开开[ali_4]</a>
+			            </div>
+		            </li>
+
+	            </ul>
+	            <!--文章排行-->
+	            <ul class="paihang-ul" style="display: none;">
+
+                    <li><span></span><a href="/news/show-158.html" title="中国已进入互害模式，人人逃不脱！">中国已进入互害模式，人人逃不脱！<b>(314)</b></a></li>
+
+                    <li><span></span><a href="/news/show-149.html" title="汪汪博客再次更新">汪汪博客再次更新<b>(172)</b></a></li>
+
+                    <li><span></span><a href="/news/show-144.html" title="jwplayer兼容主流视频格式播放">jwplayer兼容主流视频格式播放<b>(164)</b></a></li>
+
+                    <li><span></span><a href="/news/show-111.html" title="（2016-9-10更新）汪汪博客net源码下载">（2016-9-10更新）汪汪博客net源码下载<b>(149)</b></a></li>
+
+                    <li><span></span><a href="/news/show-154.html" title="Feedback+留言插件增强版">Feedback+留言插件增强版<b>(106)</b></a></li>
+
+                    <li><span></span><a href="/news/show-155.html" title="JS获取客户端信息">JS获取客户端信息<b>(102)</b></a></li>
+
+	            </ul>
+	        </div>
+            <!--标签-->
+            <div class="cloud bg-color animation-div">
+                <h4 class="index-title"><i class="el-tags icon-tag"></i>标签云<small>Tags Clouds</small></h4>
+	            <ul id="3dcloud">
+
+                      <li><a href= "/search.html?keyword=后台模板" title="10个话题">后台模板</a> </li>
+
+                      <li><a href= "/search.html?keyword=net源码" title="3个话题">net源码</a> </li>
+
+                      <li><a href= "/search.html?keyword=汪汪博客" title="2个话题">汪汪博客</a> </li>
+
+                      <li><a href= "/search.html?keyword=网站技巧" title="2个话题">网站技巧</a> </li>
+
+                      <li><a href= "/search.html?keyword=OA" title="2个话题">OA</a> </li>
+
+                      <li><a href= "/search.html?keyword=播放器" title="1个话题">播放器</a> </li>
+
+                      <li><a href= "/search.html?keyword=雷电" title="1个话题">雷电</a> </li>
+
+                      <li><a href= "/search.html?keyword=旅游网源码" title="1个话题">旅游网源码</a> </li>
+
+                      <li><a href= "/search.html?keyword=CRM" title="1个话题">CRM</a> </li>
+
+                      <li><a href= "/search.html?keyword=工作通" title="1个话题">工作通</a> </li>
+
+                      <li><a href= "/search.html?keyword=朋友圈" title="1个话题">朋友圈</a> </li>
+
+                      <li><a href= "/search.html?keyword=在线预览" title="1个话题">在线预览</a> </li>
+
+                      <li><a href= "/search.html?keyword=html模板" title="1个话题">html模板</a> </li>
+
+                      <li><a href= "/search.html?keyword=jwplayerplayer" title="1个话题">jwplayerplayer</a> </li>
+
+                      <li><a href= "/search.html?keyword=商家会员管理" title="1个话题">商家会员管理</a> </li>
+
+                      <li><a href= "/search.html?keyword=tags" title="1个话题">tags</a> </li>
+
+                      <li><a href= "/search.html?keyword=标签" title="1个话题">标签</a> </li>
+
+                      <li><a href= "/search.html?keyword=字符串转换数组" title="1个话题">字符串转换数组</a> </li>
+
+                      <li><a href= "/search.html?keyword=字符分割" title="1个话题">字符分割</a> </li>
+
+                      <li><a href= "/search.html?keyword=UEditor" title="1个话题">UEditor</a> </li>
+
+                      <li><a href= "/search.html?keyword=blueimp" title="1个话题">blueimp</a> </li>
+
+                      <li><a href= "/search.html?keyword=支付宝" title="1个话题">支付宝</a> </li>
+
+                      <li><a href= "/search.html?keyword=在线留言" title="1个话题">在线留言</a> </li>
+
+                      <li><a href= "/search.html?keyword=意见反馈" title="1个话题">意见反馈</a> </li>
+
+                      <li><a href= "/search.html?keyword=邮件通知" title="1个话题">邮件通知</a> </li>
+
+                      <li><a href= "/search.html?keyword=JS" title="1个话题">JS</a> </li>
+
+                      <li><a href= "/search.html?keyword=客户端" title="1个话题">客户端</a> </li>
+
+                      <li><a href= "/search.html?keyword=视频" title="1个话题">视频</a> </li>
+
+	            </ul>
+            </div>
+            <!--友情链接-->
+            <div class="side-link ">
+	            <h4 class="index-title"><i class="el-paper-clip icon-paper-clip"></i>友情链接
+                    <small>Friend Links</small>
+                    <a href="/link.html"><i class="el el-plus icon-direction"></i>申请</a>
+                </h4>
+	            <ul>
+
+                        <li><a href='http://xiaoyi6.co' target='_blank' title="">KevIn`s Blog</a> </li>
+
+	            </ul>
+            </div>
+	    </div>
+</aside>

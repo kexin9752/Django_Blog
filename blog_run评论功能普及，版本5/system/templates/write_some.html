@@ -1,0 +1,95 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    <title>KevIn`s Blog</title>
+{% endblock %}
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+
+<!--导航结束-->
+
+<!--/Header-->
+<!--主题框架开始-->
+
+        {% block container %}
+		<div class="shuo-area">
+			<article>
+				<ul>
+                    
+                    <!--取得一个分页DataTable-->
+                    {% for w in object_list %}
+                    <li>
+						<div class="shuo-ava">
+							<a><img class="img-circle" src="/static/picture/ava.gif" alt=""></a>
+							<span class="blue-text mob-hidden"><a title="发表于{{ w.created_at }} ">{{ w.created_at|date:'Y-m-d' }} </a></span>
+						</div>
+						<div class="shuo-info arrow_box ">
+						    <div class="shuo-content ">
+                                <a title="点击查看全文" href="{% url 'system:write_content' w.id %}">{{ w.content }}</a>
+                            </div>
+							<div class="shuo-line pc-hidden">
+								<ul>
+									<li><a title="发表于{{ w.created_at}} "><i class="el-time"></i>{{ w.created_at}} </a></li>
+								</ul>
+							</div>
+						</div>
+					</li>
+                    {% endfor %}
+				</ul>
+			</article>
+		</div>
+
+        <div class="pagination">
+              <div class="list-page">
+                  <ul class="post-data">
+                      <li><a>共 {{ paginator.count }} 条</a></li>
+                  </ul>
+              </div>
+              <ul>
+                  {% if page_obj.has_previous %}
+                  <li class="active"><a href="{% url 'system:write_some' %}?page={{ page_obj.previous_page_number }}">上一页</a></li>
+                  {% else %}
+                  <li class="active"><a href="javascript:valid(0);">上一页</a></li>
+                  {% endif %}
+                  {% for p in paginator.page_range %}
+                  <li><a href="{% url 'system:write_some' %}?page={{ p }}">{{ p }}</a></li>
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                  <li class="active"><a href="{% url 'system:write_some' %}?page={{ page_obj.next_page_number }}">下一页</a></li>
+                  {% else %}
+                  <li class="active"><a href="javascript:valid(0);">下一页</a></li>
+                  {% endif %}
+              </ul>
+          </div>
+        {% endblock %}
+    <!--左侧结束-->
+    <!--右侧-->
+    
+<!--=========右侧开始==========-->
+
+<!--=========右侧结束==========-->
+    <!--/右侧-->
+
+    <!--Header-->
+    <!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+
+<!---END 底部开始-->
+    <!--/Header-->
+{% block footjs %}
+    <script type="text/javascript">
+        $(function () {
+            $("nav").find("li").eq(2).addClass("nav-active");
+        })
+    </script>
+{% endblock %}

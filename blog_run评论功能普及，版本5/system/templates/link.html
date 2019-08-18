@@ -1,0 +1,218 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    <title>友情链接 - KevIn`s Blog</title>
+{% endblock %}
+{% block link0 %}
+    <link type="text/css" rel="stylesheet" href="/static/css/validate.css" />
+    <link type="text/css" rel="stylesheet" href="/static/css/pagination.css" />
+    <link type="text/css" rel="stylesheet" href="/static/css/ui-dialog.css" />
+{% endblock %}
+{#    <script type="text/javascript" src="/static/js/jquery-1.11.2.min.js"></script>#}
+{% block link %}
+    <script type="text/javascript" src="/static/js/jquery.form.min.js"></script>
+    <script type="text/javascript" src="/static/js/validform_v5.3.2_min.js"></script>
+    <script type="text/javascript" src="/static/js/dialog-plus-min.js"></script>
+    <script type="text/javascript" src="/static/js/common.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            //初始化表单
+            AjaxInitForm('#link_form', '#btnSubmit', 1);
+            $(".side-link ").hide();
+        });
+    </script>
+    <style type="text/css">
+        .Validform_checktip{line-height:35px !important}
+    </style>
+{% endblock %}
+
+<body class="nobg" >
+<!--Header-->
+<link href="/static/css/simple-line-icons.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+
+<!--导航结束-->
+
+<!--/Header-->
+<!--主题框架开始-->
+{% block content %}
+<div class="container">
+    <!--左侧开始-->
+	<section>
+        <article>
+            <div class="blog_hd">
+                <h4 class="index-title" ><i class="el-comment-alt icon-speech"></i>最近留言的会显示在这里，显示10条</h4>
+	            <ul>
+                    {% for c in comment_top_ten %}
+                     <li>
+                        <a href="{% url 'system:feed_back' %}" target="_blank" rel="nofollow" title="{{ c.u_name }} ">
+                            <img src="/static/images/Portrait/{{ c.img }}.jpg" class="img-circle img_45x45"/>
+                        </a>
+		                <div class="hd_right">
+                            <a href="{% url 'system:feed_back' %}" target="_blank" rel="nofollow" title="点击查看留言">{{ c.u_name }} </a><br>
+                            <a style="color:#333;"title="{{ c.created_at|date:'Y-m-d' }}">{{ c.created_at|date:'Y-m-d' }}</a>
+                        </div>
+		            </li>
+                    {% endfor %}
+	            </ul>
+            </div>
+            <div class="blog_links">
+		        <h4 class="index-title" id="New2"><i class="el-paper-clip"></i> 本站友情链接：</h4>
+		        <ul>
+                    <li>
+					        <a href="{% url 'index' %}" target="_blank" title=""  >KevIn`s Blog</a>
+					        <span>http://kevin.co</span>
+					    </li>
+                    {% for p in pass_link %}
+                    <li>
+					        <a href="{{ p.web_link }}" target="_blank" title="点击跳转"  >{{ p.web_name }}</a>
+					        <span>{{ p.web_link }}</span>
+					    </li>
+                    {% endfor %}
+		        </ul>
+	        </div>
+            <div class="blog_links">
+		        <h4 class="index-title"><i class="el-paper-clip-alt"></i> 内页链接：</h4>
+	            <ul>
+                    {% for wi in inner_link %}
+                    <li>
+					        <a href="{{ i.web_link }}" target="_blank" title="点击跳转"  >{{ i.web_name }}</a>
+					        <span>{{ i.web_link }}</span>
+					    </li>
+                    {% endfor %}
+	            </ul>
+	        </div>
+            <div class="blog_links">
+		        <h4 class="index-title"><i class="el-ban-circle"></i> 待审链接：以下为未审核，或被暂时撤下的链接。</h4>
+		        <ul>
+                    {% for w in wait_link %}
+                    <li>
+					        <a href="{{ w.web_link }}" target="_blank" title="点击跳转"  >{{ w.web_name }}</a>
+					        <span>{{ w.web_link }}</span>
+					    </li>
+                    {% endfor %}
+		        </ul>
+	        </div>
+            <!--编辑的内容-->
+            <div class="link-edit">
+                <h4 class="index-title">
+	                <i class="el-info-circle"></i><span style="font-size:14px;font-family:'微软雅黑';">申请说明:</span> 
+                </h4>
+                <p>
+	                <span style="font-size:14px;font-family:'微软雅黑';">1、</span><span style="color:#E53333;font-size:14px;font-family:'微软雅黑';"><strong>在您申请本站友情链接之前请先做好本站链接</strong></span><span style="font-size:14px;font-family:'微软雅黑';">，谢谢！</span><br />
+                    <span style="font-size:14px;font-family:'微软雅黑';"> 2、网站内容无意义，百度收录5页都没有的暂不交换！</span><br />
+                    <span style="font-size:14px;font-family:'微软雅黑';"> 3、淘宝、色情、反动、病毒、擦边球、纯商业、违法中华人民共和国法律的网站暂不交换！</span><br />
+                    <span style="font-size:14px;font-family:'微软雅黑';"> 4、申请成功后请毋随意撤下链接，其他原因撤下请通知我，否则本站也会删除对应链接！</span><br />
+                    <span style="font-size:14px;font-family:'微软雅黑';"> 5、我会对成功的链接经常访问，对于被K的站点，暂时会将链接撤回内页，正常后恢复！</span> 
+                </p>
+                <br />
+                <h4 class="index-title">
+	                <i class="el-idea"></i><span style="font-size:14px;font-family:'微软雅黑';">站点信息:</span> 
+                </h4>
+                <p>
+	                <span style="font-size:14px;font-family:'微软雅黑';"> 频率：不定时更新技术文章篇；</span><br />
+                    <span style="font-size:14px;font-family:'微软雅黑';"> 名称：KevIn`s Blog</span><br />
+                    <span style="font-size:14px;font-family:'微软雅黑';"> 地址：</span><a href="{% url 'index' %}" target="_blank"><span style="font-size:14px;font-family:'微软雅黑';">暂未上线/</span></a><br />
+                    <span style="font-size:14px;font-family:'微软雅黑';"> 介绍：KevIn`s Blog，一个个人网站，IT技术分享，记录IT生活，提供技术分享和作品分享的个人原创网站。</span>
+                </p>
+            </div>
+            <h4 class="index-title"><i class="el-edit icon-note"></i> 开始申请: 欢迎交换友链</h4>
+	        <div id="Join" class="form-zd form-in">
+				<form id="link_form" name="link_form" url="{% url 'system:link' %}">
+					<!----网站名称------->
+				    <div class="input-prepend">
+				    	<span class="add-on"><i class="el-user icon-directions"></i></span>
+				    	<input name="txtTitle" type="text"  id="txtTitle"  size="16" placeholder="网站名称（必须）" datatype="*" sucmsg=" "/>
+                        <span class="Validform_checktip">*网站名称</span>
+				    </div>
+                    <!----联系人------->
+				    <div class="input-prepend">
+				    	<span class="add-on"><i class="el-user"></i></span>
+				    	<input name="txtUserName" type="text"  id="txtUserName"  size="16" placeholder="联系人（必须）" datatype="*" sucmsg=" "/>
+                        <span class="Validform_checktip">*联系人</span>
+				    </div>
+                    <!----联系电话------->
+				    <div class="input-prepend">
+				    	<span class="add-on"><i class="el-user icon-call-end"></i></span>
+				    	<input name="txtUserTel" type="text"  id="txtUserTel"  size="16" placeholder="联系电话（选填）" />
+				    </div>
+					<!------电子邮箱----->				
+					<div class="input-prepend">
+						<span class="add-on"><i class="el-envelope"></i></span>
+						<input name="txtEmail" type="text"  id="txtEmail"  size="16" placeholder="您的邮箱（选填）" />
+					</div>
+					<!----链接网址------->				
+					<div class="input-prepend">
+						<span class="add-on"><i class="el-globe"></i></span>
+						<input name="txtSiteUrl" type="text" id="txtSiteUrl" size="16" placeholder="您的网站（必须）"  datatype="url" sucmsg=" "/>
+                        <span class="Validform_checktip">*链接网址</span>
+					</div>
+                    <!----LOGO图片------->
+{#				    <div class="input-prepend">#}
+{#				    	<span class="add-on"><i class="el-user icon-picture"></i></span>#}
+{#				    	<input name="txtImgUrl" type="text"  id="txtImgUrl"  size="16" placeholder="网站链接的LOGO图片地址（选填）" />#}
+{#                        <span class="Validform_checktip">网站LOGO图片地址</span>#}
+{#				    </div>#}
+					<!----内容------->			
+                    <div class="input-prepend" style="height:155px">
+						<textarea class="link-text" style="height:150px;width:70%;"name="txaArticle" id="txaArticle" placeholder="网站介绍（必须）" datatype="*" sucmsg=" "></textarea>
+					</div>
+					
+					<!--验证码-->
+					<div class="input-prepend yzm">
+						<i class="el-question-sign"></i>
+                        <input id="txtCode" name="txtCode" type="text" class="input small" datatype="*" sucmsg=" " placeholder="验证码"/>
+                        <span title="点击刷新验证码?" style=" float: left;" class="img_code">
+                            <a href="javascript:;">
+                                <img src="{% url 'accounts:verify_code' %}" class="verify-code-img" data-src="{% url 'accounts:verify_code' %}" width="80" height="22" style="vertical-align:middle;" />
+                            </a>
+                        </span>
+                        <span class="Validform_checktip"></span>
+					</div>
+                    <input id="csrf" type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
+					<!--提交表单--------->          
+					<div class="feed-sub"><input type="submit" class="btn btn-inverse" value="申请链接" id="btnSubmit" name="btnSubmit"/>  </div>	
+				</form>
+	        </div>
+        </article>
+    </section>
+    <!--左侧结束-->
+    <!--右侧-->
+    <script type="text/javascript" src="/static/js/common.js"></script>
+    
+<!--=========右侧开始==========-->
+{% include 'base/rside.html' %}
+<!--=========右侧结束==========-->
+    <!--/右侧-->
+</div>
+{% endblock %}
+<!--Header-->
+<!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+
+<!---END 底部开始-->
+<!--/Header-->
+{% block footjs %}
+<script type="text/javascript">
+    $('.verify-code-img').click(function() {
+            $(this).attr('src', $(this).attr('data-src') + '?t=' + new Date().getTime())
+        });
+
+    $(function () {
+        $("nav").find("li").eq(5).addClass("nav-active");
+    })
+</script>
+{% endblock %}

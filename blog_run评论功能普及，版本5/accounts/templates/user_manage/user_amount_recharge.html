@@ -1,0 +1,117 @@
+{% extends 'user_base/user_base.html' %}
+{% block title %}
+    <title>账户余额 - KevIn`s Blog</title>
+{% endblock %}
+
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+
+<!--导航结束-->
+
+<!--/Header-->
+
+    <!--左侧导航-->
+
+
+    <!--/左侧导航-->
+    
+    <!--右侧内容-->
+    {% block content %}
+    <div class="member-redpack fr w955" >
+      
+      <!--账户充值-->
+      <link rel="stylesheet" href="/static/css/validate.css" />
+      <script type="text/javascript" src="/static/scripts/jquery/jquery.form.min.js"></script>
+      <script type="text/javascript" src="/static/scripts/jquery/Validform_v5.3.2_min.js"></script>
+      <script type="text/javascript">
+		$(function(){
+			//初始化表单
+			AjaxInitForm('#rechargeForm', '#btnSubmit', 0,'#urlobj');
+		});
+      </script>
+        <input type="hidden" id="urlobj" value="{% url 'accounts:user_center_recharge' %}">
+        <h3 class="operate-title mt20">账户充值</h3>
+        <div class="operate-items mt20">
+              <a class="j-item now" href="{% url 'accounts:user_center_recharge' %}">账户充值</a>
+              <a class="j-item" href="{% url 'accounts:user_amount_log' %}">充值记录</a>
+              <a class="j-item" href="{% url 'accounts:user_balance_list' %}">收支明细</a>
+        </div>
+        <div class="orders j-orders" style="display: block;">
+            <form id="rechargeForm" name="recharge_form" url="{% url 'accounts:user_center_recharge' %}">
+        <div class="form-box">
+          <dl>
+            <dt>账户余额：</dt>
+            <dd>当前账户金额为：<b class="red">￥{{ user.balance }}</b> 元</dd>
+          </dl>
+          <dl>
+            <dt>充值金额：</dt>
+            <dd>
+              <input name="order_amount" id="order_amount" type="text" class="input small" onkeydown="return checkNumber(event);" datatype="n"  nullmsg="请输入金额" sucmsg=" " /> 元
+            </dd>
+          </dl>
+          <dl>
+            <dt>支付方式：</dt>
+            <dd>
+             <!--取得一个DataTable-->
+                <ul class="items">
+                    
+                        <li class="item-pay" info="0">
+                            <label class="icon-pay-ebank-icbc icon-pay-tenpay-3" title="支付宝" style="background:#fff url('/static/picture/zhifubao.jpg') no-repeat 50px center;background-size: 65% 85%">
+                                <input name="payment_id" type="radio" value="3">
+                            </label>
+                        </li>
+                      
+                        <li class="item-pay" info="0">
+                            <label class="icon-pay-ebank-icbc icon-pay-tenpay-4" title="财付通" style="background:#fff url('/static/picture/weixinzhifu.png') no-repeat 50px center;background-size: 65% 85%">
+                                <input name="payment_id" type="radio" value="4">
+                            </label>
+                        </li>
+                      
+                        <li class="item-pay" info="0">
+                            <label class="icon-pay-ebank-icbc icon-pay-tenpay-5" title="网银在线" style="background:#fff url('/static/picture/yinlian.jpg') no-repeat 50px center;background-size: 65% 65%">
+                                <input name="payment_id" type="radio" value="5" datatype="*" sucmsg=" ">
+                            </label>
+                        </li>
+                      
+                </ul>
+            </dd>
+          </dl>
+          <dl>
+            <dt></dt>
+            <dd class="feed-sub"><input name="btnSubmit" id="btnSubmit" type="submit" class="btn btn-inverse" value="确认充值" /></dd>
+          </dl>
+        </div>
+        <input id="csrf" type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
+        </form>
+        </div>
+      <!--/账户充值-->
+      
+      
+    </div>
+    {% endblock %}
+    <!--/右侧内容-->
+
+<!--Footer-->
+<!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+
+<!---END 底部开始-->
+<!--/Footer-->
+{% block footjs %}
+<script type="text/javascript">
+    $(function () {
+        $(".mymoney").addClass("demo-dd-a-now");
+    })
+    </script>
+{% endblock %}

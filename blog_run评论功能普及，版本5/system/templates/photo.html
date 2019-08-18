@@ -1,0 +1,93 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    <title>KevIn`s Blog</title>
+{% endblock %}
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+
+<!--导航结束-->
+
+<!--/Header-->
+<!--主题框架开始-->
+{% block content %}
+    <div class="container">
+           <div class="album w95">
+		       <h4 class="index-title"><a href="{% url 'system:photo_detail' %}?photo=all" class="all"><i class="el-camera"></i>查看所有相片> ></a></h4>
+               <ul class="wall">
+                    
+                    <!--取得一个分页DataTable-->
+                    {% for p in object_list %}
+                    <li class="wall-li img_loading">
+				        <a  class="orange-text" href="{% url 'system:photo_detail' %}?photo={{ p.id }}" title="{{ p.photo_name }}的精美截图">
+					        <img alt="{{ p.photo_name }}" src="{{ p.img.url }}" />
+					        <p>{{ p.photo_name }}</p>
+					        <small><i class="el-time icon-calendar"></i>{{ p.created_at }}</small>
+					        <small><i class="el-comment icon-eye"></i>{{ p.view_count }}</small>
+				        </a>
+			        </li>
+                    {% endfor %}
+
+		        </ul>
+                <div class="pagination">
+              <div class="list-page">
+                  <ul class="post-data">
+                      <li><a>共 {{ paginator.count }} 条</a></li>
+                  </ul>
+              </div>
+              <ul>
+                  {% if page_obj.has_previous %}
+                  <li class="active"><a href="{% url 'system:photo' %}?page={{ page_obj.previous_page_number }}">上一页</a></li>
+                  {% else %}
+                  <li class="active"><a href="javascript:valid(0);">上一页</a></li>
+                  {% endif %}
+                  {% for p in paginator.page_range %}
+                  <li><a href="{% url 'system:photo' %}?page={{ p }}">{{ p }}</a></li>
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                  <li class="active"><a href="{% url 'system:photo' %}?page={{ page_obj.next_page_number }}">下一页</a></li>
+                  {% else %}
+                  <li class="active"><a href="javascript:valid(0);">下一页</a></li>
+                  {% endif %}
+              </ul>
+          </div>
+	            <script type="text/javascript">
+	                $(function () {
+	                    $('.wall').jaliswall({ item: '.wall-li' });
+	                    var xlen = $(".wall .wall-column").length
+	                    for (var x = 0; x <= xlen; x++) {
+	                        $(".wall .wall-column").eq(x).css({
+	                            "-webkit-animation-name": "zhengshang",
+	                            "-webkit-animation-duration": x / 5 + 0.5 + "s",
+	                            "animation-name": "zhengshang",
+	                            "animation-duration": x / 5 + 0.5 + "s"
+	                        });
+	                    }
+	                });
+	        </script>    
+        </div> 
+    </div>
+{% endblock %}
+    <!--Header-->
+    <!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+
+<!---END 底部开始-->
+    <!--/Header-->
+{% block footjs %}
+    <script type="text/javascript">
+        $(function () {
+            $("nav").find("li").eq(6).addClass("nav-active");
+        })
+    </script>
+{% endblock %}

@@ -4,3 +4,6 @@
 
 
 采用的是mysql数据库，celery采用的是django封装好了的django-celery
+
+
+普及评论功能

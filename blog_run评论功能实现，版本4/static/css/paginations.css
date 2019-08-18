@@ -1,6 +1,0 @@
-.pagination ul > li > a:hover, .pagination ul > .active > a, .pagination ul > .active > span {
-    background-color: rgb(237, 237, 237)
-}
-.pagination ul > li > a, .pagination ul > li > span {
-    background-color: rgb(239, 245, 249)
-}
