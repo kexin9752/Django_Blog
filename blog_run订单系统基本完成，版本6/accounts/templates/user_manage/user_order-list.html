@@ -1,0 +1,207 @@
+{% extends 'user_base/user_base.html' %}
+{% block title %}
+    <title>我的订单 - KevIn`s Blog</title>
+{% endblock %}
+{% block link %}
+    <link href="/static/css/paginations.css" rel="stylesheet" type="text/css" />
+    <link href="/static/scripts/artdialog/ui-dialog.css" rel="stylesheet" type="text/css" />
+    <link href="/static/css/member-center.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" charset="utf-8" src="/static/scripts/jquery/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/scripts/artdialog/dialog-plus-min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/js/common.js"></script>
+    <script type="text/javascript" src="/static/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
+{% endblock %}
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+
+<!--导航结束-->
+
+    <!--/Header-->
+{% block container %}
+    <div class="container">
+<div class="clearfix">
+  <div class="info-wrap">
+    <!--左侧导航-->
+    <link href="/static/css/member-center.css" rel="stylesheet" type="text/css" />
+{#<script src="/static/js/usercenter/member-common.js" type="text/javascript"></script>#}
+{% include 'user_base/lside.html' %}
+
+    <!--/左侧导航-->
+
+    <!--右侧内容-->
+    <div class="member-redpack fr w955">
+        <h3 class="operate-title mt20">我的订单</h3>
+        <div class="operate-items mt20">
+            <a class="j-item now" href="javascript:;">
+                <select onchange="ChangeStatus(this.value)" style="background-color: #00ACAC;border: none;margin-right: 3px;padding: 4px" class="j-item now" name="" id="">
+                    <option value="0">筛选订单</option>
+                    <option value="1">待支付</option>
+                    <option value="2">已支付</option>
+                    <option value="3">已发货</option>
+                    <option value="4">已收货</option>
+                </select>
+            </a>
+{#            <a class="j-item " href="/user/order-close.html">已关闭订单</a>#}
+        </div>
+        <div class="redpack j-redpack" style="display:block;">
+            <table class="redpack-items">
+                <thead>
+                    <tr class="redpack-tr1">
+                        <th width="50">选择</th>
+                        <th align="left">订单编号</th>
+                        <th width="24%" align="left">商品名称</th>
+                        <th width="8%" align="left">商品数量</th>
+                        <th width="8%" align="left">订单总价</th>
+                        <th width="8%" align="left">订单状态</th>
+                        <th width="12%" align="left">创建时间</th>
+                        <th width="100">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--取得一个DataTable-->
+                     <!--取得分页页码列表-->
+                      {% for order in object_list %}
+{#                      {% with a=c.article %}#}
+                      <tr>
+                        <td width="20" align="center">
+                          <input name="checkId" class="checkall" type="checkbox" value="{{ order.id }}" >
+                        </td>
+                        <td><a target="_blank" href="javascript:;">{{ order.order_sn }}</a></td>
+                        <td>{% for d in order.order_detail.all %}<p>《{{ d.goods_name }}》</p>{% endfor %}</td>
+                        <td>{{ order.goods_count }}</td>
+                        <td>{{ order.order_price }}</td>
+                        <td>{{ order.get_order_status_display }}</td>
+                        <td>{{ order.created_at }}</td>
+                        <td align="center">
+                            {% if status == 'submit' %}
+                            <a href="{% url 'accounts:user_order_detail' %}?sn={{ order.order_sn }}" style="color: red">去支付</a>
+                            {% elif status == 'send' %}
+                            <a onclick="" style="color: red">确认收货</a>
+                            {% elif status == 'paied' %}
+                            <a onclick="alert('已提醒卖家发货')" style="color: red">提醒发货</a>
+                            {% else %}
+                            <a onclick="ExecPostBack();" style="color: red">删除</a>
+                            {% endif %}
+
+{#                            <select name="" id="">#}
+{#                                <option onclick="OrderPostBack({{ c.id }});" value="" style="">去支付</option>#}
+{#                                <option onclick="ExecPostBack({{ c.id }});"  value="">删除</option>#}
+{#                            </select>#}
+                        </td>
+                      </tr>
+{#                      {% endwith %}#}
+                    {% endfor %}
+{#                      <tr><td colspan="5" align="center">暂无记录...</td></tr>#}
+
+                 </tbody>
+            </table>
+            <div class="page-foot">
+              <div class="pagination">
+              <div class="list-page">
+                  <ul class="post-data">
+                      <li><a>共 {{ paginator.count }} 条</a></li>
+                  </ul>
+              </div>
+              <ul>
+                  {% if page_obj.has_previous %}
+                  <li class="active"><a href="{% url 'accounts:user_order_list' %}?page={{ page_obj.previous_page_number }}&status={{ status }}">上一页</a></li>
+                  {% else %}
+                  <li class="active"><a href="javascript:valid(0);">上一页</a></li>
+                  {% endif %}
+                  {% for p in paginator.page_range %}
+                  <li><a href="{% url 'accounts:user_order_list' %}?page={{ p }}&status={{ status }}">{{ p }}</a></li>
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                  <li class="active"><a href="{% url 'accounts:user_order_list' %}?page={{ page_obj.next_page_number }}&status={{ status }}">下一页</a></li>
+                  {% else %}
+                  <li class="active"><a href="javascript:valid(0);">下一页</a></li>
+                  {% endif %}
+              </ul>
+          </div><!--放置页码列表-->
+              <div class="page-btns">
+                <a onclick="checkAll(this);" href="javascript:;">全选</a>
+                {% if status == 'submit' %}
+                <span class="pipe">|</span>
+                <a onclick="OrderPostBack();" href="javascript:;" style="color: red">去支付</a>
+                <span class="pipe">|</span>
+                <a onclick="ExecPostBack();" href="javascript:;">删除</a>
+                {% elif status == 'paied' %}
+                <span class="pipe">|</span>
+                <a onclick="alert('已提醒卖家发货')" style="color: red" href="javascript:;">提醒发货</a>
+                {% elif status == 'send' %}
+                <span class="pipe">|</span>
+                <a onclick="" href="javascript:;" style="color: red">确认收货</a>
+                {% elif status == 'done' %}
+                <span class="pipe">|</span>
+                <a onclick="" href="javascript:;" style="color: red">去评论</a>
+                <span class="pipe">|</span>
+                <a onclick="ExecPostBack();" href="javascript:;">删除</a>
+                {% endif %}
+              </div>
+            </div>
+        </div>
+        <input id="turl" type="hidden" value="{% url 'accounts:user_order_list' %}?status={{ status }}" /><!--存在跳转的URL值-->
+        <input type="hidden" id="csrf" value="{{ csrf_token }}">
+    </div>
+    <!--/右侧内容-->
+  </div>
+</div>
+</div>
+{% endblock %}
+    <!--Footer-->
+    <!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+
+<!---END 底部开始-->
+    <!--/Footer-->
+{% block footjs %}
+    <script type="text/javascript">
+
+        function ChangeStatus(value){
+            if (value === '1'){
+                location.href = '{% url "accounts:user_order_list" %}?status=submit'
+            }else if (value === '2'){
+                location.href = '{% url "accounts:user_order_list" %}?status=paied'
+            }
+            else if (value === '3'){
+                location.href = '{% url "accounts:user_order_list" %}?status=send'
+            }
+            else if (value === '4'){
+                location.href = '{% url "accounts:user_order_list" %}?status=done'
+            }
+        }
+
+        function ExecPostBack(checkValue) {
+		    if (arguments.length == 1) {
+			    ExecDelete('{% url "accounts:user_order_del" %}', checkValue, '#turl','#csrf');
+		    }else{
+			    var valueArr = '';
+			    $("input[name='checkId']:checked").each(function(i){
+				    valueArr += $(this).val();
+				    if(i < $("input[name='checkId']:checked").length - 1){
+					    valueArr += ","
+				    }
+			    });
+			    ExecDelete('{% url "accounts:user_order_del" %}', valueArr, '#turl','#csrf');
+		    }
+        }
+
+        $(function () {
+            $(".myorder").addClass("demo-dd-a-now");
+        })
+
+
+    </script>
+{% endblock %}

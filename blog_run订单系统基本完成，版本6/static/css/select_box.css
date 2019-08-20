@@ -1,0 +1,82 @@
+
+/*css*/
+/*通用样式*/
+body{
+    background: #FFBD1E;
+}
+ul,li{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+/*下拉框样式*/
+#select{
+    margin:100px;
+    background: rgba(0,0,0,0);
+    width: 249px;
+    height: 40px;
+    font-family: "微软雅黑";
+    font-size: 18px;
+    color: white;
+    border: 1px #1a1a1a solid;
+    border-radius: 5px;
+}
+.select-head{
+    overflow: hidden;
+    width: 249px;
+    height: 40px;
+    box-sizing: border-box;
+    padding: 0 10px;
+    line-height: 40px;
+}
+.select-head .select-head-cont{
+    float: left;
+}
+.select-head .select-icon{
+    float: right;
+}
+.option{
+    text-indent: 10px;
+    margin-top: 1px;
+    width: 249px;
+    color: black;
+    background: rgba(236,111,111,0.1);
+    line-height: 25px;
+    border: 1px #cfcfcf solid;
+    display: none;
+}
+.option-item:hover{
+    background: rgba(204,106,67,0.3);
+}
+.click_bg{
+    background: rgba(204,106,67,0.3);
+}
+.rotate {
+    transform-origin: center center;
+    /* //旋转中心要是正中间 才行*/
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transition: transform 0.2s;
+    -moz-transition: -moz-transform 0.2s;
+    -moz-transition: -moz-transform 0.2s;
+    -o-transition: -o-transform 0.2s;
+    -ms-transition: -ms-transform 0.2s;
+}
+
+.rotate1 {
+    transform-origin: center center;
+    transform: rotate(0deg);
+    /*//返回原点*/
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transition: transform 0.2s;
+    -moz-transition: -moz-transform 0.2s;
+    -moz-transition: -moz-transform 0.2s;
+    -o-transition: -o-transform 0.2s;
+    -ms-transition: -ms-transform 0.2s;
+}

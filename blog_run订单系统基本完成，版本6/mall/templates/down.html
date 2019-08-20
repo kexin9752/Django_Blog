@@ -1,0 +1,118 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    <title>KevIn`s Blog</title>
+{% endblock %}
+
+{#//        $(function () {#}
+{#//            if ($(".sucailist").children("ul:first-child").children("li").length >= 10) {#}
+{#//                $(".pagintion").show();#}
+{#//            }#}
+{#//            else {#}
+{#//                $(".pagination").hide();#}
+{#//            }#}
+{#//        });#}
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+
+<!--导航结束-->
+
+<!--/Header-->
+<!--主题框架开始-->
+{% block content %}
+<div class="container">
+    <!--左侧开始-->
+	<section>
+        <div class="sucailist">
+            <!--列表开始-->
+			<ul class="su">
+
+                <!--取得一个分页DataTable-->
+                {% for g in object_list %}
+
+                <li id="tuijian" class="su-li">
+                
+				  <a href="{% url 'mall:down_content' g.uid %}?num={{ forloop.counter0 }}" title="{{ g.goods_name }}">
+					<div class="sucaiimg img_loading">
+					    <img  src="{{ g.goods_image.url }}" alt="{{ g.goods_name }}"/>
+					</div>
+				  </a>
+					<div class="sucai-right">
+						<h4 class="blue-text">{{ g.goods_name }}</h4>
+						<ul >
+							<li ><a title=" {{ g.created_at }} "><i class="el-time"></i> {{ g.created_at }}</a></li>
+							<li class="mob-hidden">
+							  <i class="el-tag"></i>
+                                
+                                <a href= "javascript:;">{{ g.goods_type.name }}</a>&nbsp;
+                                
+							</li>
+						</ul>
+					</div>
+				</li>
+                {% endfor %}
+			</ul>
+			<!--列表结束-->
+        </div>
+        <!--分页-->
+        <div class="pagination">
+              <div class="list-page">
+                  <ul class="post-data">
+                      <li><a>共 {{ paginator.count }} 条</a></li>
+                  </ul>
+              </div>
+              <ul>
+                  {% if page_obj.has_previous %}
+                  <li class="active"><a href="{% url 'mall:down' %}?page={{ page_obj.previous_page_number }}">上一页</a></li>
+                  {% else %}
+                  <li class="active"><a href="javascript:valid(0);">上一页</a></li>
+                  {% endif %}
+                  {% for p in paginator.page_range %}
+                  <li><a href="{% url 'mall:down' %}?page={{ p }}">{{ p }}</a></li>
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                  <li class="active"><a href="{% url 'mall:down' %}?page={{ page_obj.next_page_number }}">下一页</a></li>
+                  {% else %}
+                  <li class="active"><a href="javascript:valid(0);">下一页</a></li>
+                  {% endif %}
+              </ul>
+          </div>
+    </section>
+    <!--右侧-->
+    <script type="text/javascript" src="/static/js/common.js"></script>
+    
+<!--=========右侧开始==========-->
+{% include 'base/rside.html' %}
+<!--=========右侧结束==========-->
+    <!--/右侧-->
+</div>
+{% endblock %}
+<!--Header-->
+<!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+
+<!---END 底部开始-->
+<!--/Header-->
+{% block footjs %}
+<script type="text/javascript">
+    $(function () {
+        $("nav").find("li").eq(7).addClass("nav-active");
+    })
+</script>
+<script type="text/javascript">
+    $(function () {
+        //瀑布流
+        $('.su').jaliswall({ item: '.su-li' });
+    });
+</script> 
+{% endblock %}

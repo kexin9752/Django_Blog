@@ -1,0 +1,160 @@
+{% extends 'user_base/user_base.html' %}
+    <title>收货地址 - KevIn`s Blog</title>
+
+{% block link %}
+    <link href="/static/css/validate.css" rel="stylesheet" type="text/css" />
+    <link href="/static/css/ui-dialog.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" charset="utf-8" src="/static/scripts/jquery/jquery.form.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/scripts/jquery/Validform_v5.3.2_min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/scripts/jquery/PCASClass.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/js/common.js"></script>
+{% endblock %}
+
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+
+<!--导航结束-->
+
+<!--/Header-->
+{% block container %}
+<div class="container">
+    <div class="clearfix">
+        <div class="info-wrap">
+    <!--左侧导航-->
+    <link href="/static/css/member-center.css" rel="stylesheet" type="text/css" />
+{% include 'user_base/lside.html' %}
+
+    <!--/左侧导航-->
+    
+    <!--右侧内容-->
+    <div class="member-redpack fr w955">
+        <script type="text/javascript">
+            $(function () {
+                //初始化表单
+                AjaxInitForm('#editForm', '#btnSubmit', 1, '#turl');
+            });
+	  </script>
+        <h3 class="operate-title mt20">我的收货地址</h3>
+        <div class="operate-items mt20">
+            <a class="j-item now" href="{% url 'accounts:user_address_list' %}">收货地址</a>
+            <a class="j-item " href="{% url 'accounts:user_address_list' %}">返回</a>
+        </div>
+        <div class="redpack j-redpack" style="display:block;">
+            
+      <!--添加新地址-->
+      <script type="text/javascript">
+          $(function () {
+              //初始化地区
+              var mypcas = new PCAS("txtProvince,所属省份", "txtCity,所属城市", "txtArea,所属地区");
+          });
+	  </script>
+      <div class="u-tab-content">
+        <script type="text/javascript">
+            $(".operate-title").text("添加新地址");
+        </script>
+        <form id="editForm" name="editForm" url="{% url 'accounts:user_address_add' %}">
+          <div class="form-box">
+            <dl>
+              <dt>收件人姓名：</dt>
+              <dd>
+                <input name="txtAcceptName" id="txtAcceptName" type="text" class="input txt form-control" datatype="s1-50"  nullmsg="请填写收件人用户名" sucmsg=" " />
+              </dd>
+            </dl>
+            <dl>
+              <dt>所属地区：</dt>
+              <dd>
+                <select id="txtProvince" name="txtProvince" class="select"></select>
+                <select id="txtCity" name="txtCity" class="select"></select>
+                <select id="txtArea" name="txtArea" class="select" datatype="*" nullmsg="请选择所属地区" sucmsg=" "></select>
+              </dd>
+            </dl>
+            <dl>
+              <dt>详细地址：</dt>
+              <dd>
+                <input name="txtAddress" id="txtAddress" type="text" class="input wide form-control" maxlength="255" datatype="*0-255" nullmsg="请填写详细地址" sucmsg=" " />
+              </dd>
+            </dl>
+            <dl>
+              <dt>手机号码：</dt>
+              <dd>
+                <input name="txtMobile" id="txtMobile" type="text" class="input txt form-control" maxlength="30" datatype="m" nullmsg="请填写手机号码" sucmsg=" "  />
+              </dd>
+            </dl>
+
+            <dl>
+              <dt>电子邮箱：</dt>
+              <dd>
+                <input name="txtEmail" id="txtEmail" type="text" class="input txt form-control" maxlength="30" datatype="*0-30" sucmsg=" "  />
+              </dd>
+            </dl>
+            <dl>
+              <dt>邮政编码：</dt>
+              <dd>
+                <input name="txtPostCode" id="txtPostCode" type="text" class="input txt form-control" maxlength="30" datatype="n0-10" sucmsg=" "  />
+              </dd>
+            </dl>
+            <dl>
+              <dt>验证码：</dt>
+              <dd>
+                <input id="txtCode" name="txtCode" class="input small" type="text" datatype="*" sucmsg=" " style="ime-mode:disabled;text-transform:uppercase;">
+                <a id="verifyCode" href="javascript:;">
+                    <img src="{% url 'accounts:verify_code' %}" class="verify-code-img" data-src="{% url 'accounts:verify_code' %}" width="80" height="30" style="vertical-align:middle;" /> 看不清楚？</a>
+              </dd>
+            </dl>
+            <dl>
+              <dt></dt>
+              <dd>
+                  <div class="read-protocal">
+                            <input id="chkAgree" name="chkAgree" type="checkbox" value="1"  />
+                            是否将新增地址设为<a href="javascript:;" style="color: #58b3ec;">默认收货地址</a>
+                            <div id="regrules" title="设为默认收货地址" style="display: none;">
+                        </div>
+                      </div>
+{#                 <input name="txtDefault" id="txtDefault" type="radio" class="input txt form-control" maxlength="30" datatype="*0-20" sucmsg=" "  />#}
+              </dd>
+            </dl>
+            <dl>
+              <dt></dt>
+              <dd class="feed-sub"><input name="btnSubmit" id="btnSubmit" type="submit" class="btn  btn-inverse" value="确认提交" /></dd>
+            </dl>
+          </div>
+        </form>
+        <!--添加新地址-->
+        
+        <input id="turl" type="hidden" value="{% url 'accounts:user_address_add' %}" />
+          <input type="hidden" id="csrf" value="{{ csrf_token }}">
+      </div>
+    </div>
+        </div>
+    </div>
+    <!--/右侧内容-->
+</div>
+</div>
+{% endblock %}
+<!--Footer-->
+<!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+
+<!---END 底部开始-->
+<!--/Footer-->
+{% block footjs %}
+<script type="text/javascript">
+    $('.verify-code-img').click(function() {
+            $(this).attr('src', $(this).attr('data-src') + '?t=' + new Date().getTime())
+        });
+    $(function () {
+        $(".mycity").addClass("demo-dd-a-now");
+    })
+    </script>
+{% endblock %}
