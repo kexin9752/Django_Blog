@@ -1,0 +1,73 @@
+<div class="menu fl">
+    <div class="menu-body fl">
+        <div class="infos fl wfs">
+            <a href="{% url 'system:about_me' %}">
+
+                <img class="fl" src="{{ user.userprofile.avatar.url }}" alt="{{ user.username }}">
+
+            </a><a href="{% url 'system:about_me' %}">
+
+                <span class="fl">{{ user.username }}</span>
+
+            </a>
+            <br>
+            <i class="fl">{{ user.date_joined }}</i>
+        </div>
+        <p class="index fl wfs" style="text-align: left;">
+            <a href="{% url 'index' %}" style="color: #ffffff">用户中心&nbsp;-&nbsp;首页</a></p>
+        <dl class="menu-dl fl wfs">
+            <dt class="menu-dt order fl wfs"><i></i>订单中心</dt>
+            <dd class="fl wfs">
+                <p>
+                    <a href="{% url 'accounts:user_order_list' %}?status=submit" class="myorder">订单管理</a></p>
+                <p>
+                    <a href="{% url 'accounts:user_address_add' %}" class="mycity">收货地址</a></p>
+                <p>
+                    <a href="{% url 'accounts:user_shopping_list' %}" class="mycar">购物车</a></p>
+            </dd>
+        </dl>
+        <dl class="menu-dl fl wfs">
+            <dt class="menu-dt member fl wfs"><i></i>会员中心</dt>
+            <dd class="fl wfs">
+                <p>
+                    <a href="javascript:;" onclick="alert('视频功能暂未开启')" class="myanalysis">解析视频</a></p>
+                <p>
+                    <a href="{% url 'accounts:user_article_edit' %}" class="myarticle">发布文章</a></p>
+                <p>
+                    <a href="{% url 'accounts:user_collect' %}" class="myfavorite">我的收藏</a></p>
+                <p>
+                    <a href="{% url 'accounts:user_center_recharge' %}" class="mymoney">账户余额</a></p>
+                <p>
+                    <a href="{% url 'accounts:user_point_convert' %}" class="myintegral">我的积分</a></p>
+                <p>
+                    <a href="{% url 'accounts:user_message_accept_list' %}?params=accept" class="mymessage">站内消息</a></p>
+                <p>
+                    <a href="javascript:;" onclick="alert('好友邀请功能正在搭建中')" class="friends">邀请好友</a></p>
+            </dd>
+        </dl>
+        <dl class="menu-dl fl wfs">
+            <dt class="menu-dt account fl wfs"><i></i>账户中心</dt>
+            <dd class="fl wfs">
+                <p>
+                    <a href="{% url 'accounts:user_center_proinfo' %}" class="mytitle">个人资料</a></p>
+                <p>
+                    <a href="{% url 'accounts:user_center_avatar' %}" class="myimg">头像设置</a></p>
+                <p>
+                    <a href="{% url 'accounts:user_center_password' %}" class="mypwd">修改密码</a></p>
+                <p>
+                    <a href="{% url 'accounts:user_logout' %}" class="mylogut">退出登录</a></p>
+            </dd>
+        </dl>
+        <!--<dl class="menu-dl fl wfs">
+            <dt class="menu-dt service fl wfs"><i></i>售后服务</dt>
+            <dd class="fl wfs">
+                <p>
+                    <a href="user.php?act=product_knowledge">产品知识库</a></p>
+                <p>
+                    <a href="user.php?act=ask_list">问答列表</a></p>
+                <p>
+                    <a href="user.php?act=question">发起提问</a></p>
+            </dd>
+        </dl>-->
+    </div>
+</div>

@@ -1,0 +1,427 @@
+{% extends 'base/base.html' %}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    {% block title %}
+    <title>{{ object.title }}</title>
+    {% endblock %}
+    {% block meta %}
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" user-scalable="no" />
+    {% endblock %}
+    <!--代码高亮插件-->
+
+    {% block link %}
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css" />
+    <script type="text/javascript" charset="utf-8" src="/static/js/dialog-plus-min.js"></script>
+    <script src="/static/js/common.js" type="text/javascript"></script>
+
+    <link href="/static/css/blueimp-gallery.min.css" rel="stylesheet" type="text/css" />
+    <script src="/static/js/jquery.blueimp-gallery.min.js" type="text/javascript"></script>
+    {% endblock %}
+<!--Header-->
+
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+
+<!--导航结束-->
+
+<!--/Header-->
+<!--主题框架开始-->
+<!--主题框架开始-->
+
+<!--左侧开始-->
+	    {% block container %}
+	    <article >
+            <h3 class="arc-title index-title">{{ object.title }}</h3>
+            <div class="post-line bg-color">
+			    <ul>
+				    <li><a title="发表于 {{ object.created_at|date:'Y-m-d H:m:s' }}"><i class="el-time icon-calendar"></i><time>{{ object.created_at|date:'Y-m-d H:m:s' }}</time></a></li>
+				    <li><a href="#" title="本文作者：{{ object.author.name }}"><i class="el-user icon-user"></i>{{ object.author.name }}</a></li>
+				    <li><a href="#Comment" title="转到评论"><i class="el-comment icon-speech"></i><em id="comment">0</em>条</a></li>
+				    <li><a title="浏览数"><i class="el-eye-open icon-eye"></i><em id="view">{{ object.view_count }}次</em></a></li>
+			    </ul>
+                <script type="text/javascript">ajaxComment("#comment","{% url 'comment:comment_load' %}?art={{ object.uid }}"); ajaxView("#view","/",155);</script>
+		    </div>
+            
+            <div class="article-content bg-color" id="arc-tj">
+            
+			<!--文章正文-->
+                <div class="article-body img_loading lightBoxGallery">
+                    <pre class="brush:js;toolbar:false">
+                        {{ object.content|safe }}
+                    </pre><p><br/></p>
+                    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" style="display: none;">
+                        <div class="slides" style="width: 41256px;"></div>
+                        <h3 class="title">图片</h3>
+                        <a class="prev" title="上一张">‹</a>
+                        <a class="next" title="下一张">›</a>
+                        <span class="close" title="关闭">×</span>
+                        <span class="play-pause" title="自动播放"></span>
+                        <ol class="indicator"></ol>
+                    </div>
+                </div>
+				<!--END 文章正文-->
+				<!-- 分享 -->
+				<div class="article-fx">
+                    
+                    <div class="down_link">
+                        <ul class="attach-list">
+                          
+                        </ul>
+                    </div>
+                    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css" />
+<script type="text/javascript" charset="utf-8" src="/static/js/dialog-plus-min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        bindFavorite({{ object.id }});
+    });
+    {#'add', 'myblog', 'news', #}
+    //绑定按钮事件
+    {#action, site, channel, #}
+    function bindFavorite(id) {
+        let text = $("#myFavorite").text();
+        if (text !== '已添加'){
+            $('#myFavorite').bind('click', function () {
+            favoriteAdd(id);
+        });
+        }
+    }
+    {#action, site, channel, #}
+    //提交收藏AJAX处理
+    {#action, site, channel, #}
+    function favoriteAdd(id) {
+        //提交操作
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '{% url "article:article_collect" %}',
+            data: {"id": id },
+            timeout: 20000,
+             {#"action": action, "site": site, "channel": channel, #}
+            success: function (data, textStatus) {
+                if (data.status == 1) {
+                    $("#myFavorite").text("已收藏");
+                    $('#myFavorite').unbind("click"); //移除绑定事件
+                    var d = dialog({ content: data.msg }).show();
+                    setTimeout(function () {
+                        d.close().remove();
+                    }, 2000);
+                } else {
+                    dialog({ title: '提示', content: data.msg, okValue: '确定', ok: function () { } }).showModal();
+                }
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                dialog({ title: '提示', content: "状态：" + textStatus + "；出错提示：" + errorThrown, okValue: '确定', ok: function () { } }).showModal();
+            }
+        });
+        return false;
+    }
+</script>
+<a id="myFavorite" class="sucai-fx"><i class="icon-umbrella"></i>{% if is_add %}已添加{% else %}<script type="text/javascript" src="/static/js/ajax.js"></script>{% endif %}</a>
+
+				    <a class="fx-btn sucai-fx" href="javascript:;" title=""><i class="el-share"></i>分享本文</a>
+                    
+					<div class="bd-fx arc-bdfx">
+						<i class="el-remove fx-close"></i>
+						<ul class="bdsharebuttonbox">
+							<li><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></li>
+							<li><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a></li>
+							<li><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></li>
+							<li><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a></li>
+						</ul>
+						<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "32" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com//static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+					</div>
+				</div>
+				<!--END 分享-->
+			<hr>
+				<!--标签-->
+				<div class="article_tag">
+                    <ul >
+                        {% for t in object.tag.all %}
+						<li>
+                            <a href="javascript:;" title="归类">{{ t }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+			</div>
+	    </article>
+
+        <!--上一篇，下一篇-->
+	    <div class="shangyip bg-color">
+            {% if up_art %}
+		    <span><i class="el-arrow-up"></i>上一篇：<a href="{% url 'article:content' up_art.uid %}?num={{ up_num }}&type={{ type }}">{{ up_art.title }}</a></span>
+            {% else %}
+            <span><i class="el-arrow-up"></i>上一篇：没有了</span>
+            {% endif %}
+		    {% if down_art %}
+		    <span><i class="el-arrow-down"></i>下一篇：<a href="{% url 'article:content' down_art.uid %}?num={{ down_num }}&type={{ type }}">{{ down_art.title }}</a></span>
+            {% else %}
+            <span><i class="el-arrow-down"></i>下一篇：没有了</span>
+            {% endif %}
+	    </div>
+        <!--随机推荐-->
+        <div class="maybe-love">
+	        <h4 class="index-title"><i class="el-heart"></i>您还可能喜欢</h4>
+	        <ul>
+                {% for i in love_art_list %}
+                <li>
+			        <a href="{% url 'article:content' i.uid %}?num=0">
+			            <img src="{{ i.img.url }}" alt="{{ i.title }}" title="{{ i.title }}">
+			            <span>{{ i.title }}</span>
+			        </a>
+		        </li>
+                {% endfor %}
+	        </ul>
+        </div>
+        <!--用户评论-->
+        
+            <h4 class="index-title">
+                <i class="el el-comment-alt icon-speech"></i>
+                 当前共有<span id="comment2"> 0 </span> 条评论</h4>
+            <!--取得评论总数-->
+    <link rel="stylesheet" type="text/css" href="/static/css/validate.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/pagination.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css" />
+    <script type="text/javascript" charset="utf-8" src="/static/js/jquery.form.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/js/dialog-plus-min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/js/validform_v5.3.2_min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/js/jquery.pagination.js"></script>
+    <script type="text/javascript" src="/static/js/common.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        //初始化评论列表
+        pageInitComment();
+        //初始化评论总数
+        {#ajaxComment('#comment2','{% url "comment:comment_load" %}?art={{ object.uid }}');#}
+        //初始化发表评论表单
+        AjaxInitForm('#comment_form', '#btnSubmit', 1, '#turl', pageInitComment, clear_data);
+      });
+      //初始化评论列表
+      function pageInitComment(){
+	    AjaxPageList('#comment_list', '#pagination', 5, 3, '{% url "comment:comment_load" %}?art={{ object.uid }}', '/static/images/user-avatar.png');
+      }
+      //通过调用新浪IP地址库接口查询用户当前所在国家、省份、城市、运营商信息
+      $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', function () {
+          var citys = remote_ip_info.province + "省" + remote_ip_info.city + "市";
+          $("#mycity").val(citys);
+          
+      });
+    </script>
+<div class="comment-area">
+    <ul id="comment_list">
+
+	</ul>
+    <!--放置页码-->
+    <div class="page-box" style="margin-left:-8px;">
+        <div class="pagination">
+              <div class="list-page">
+                  <ul class="post-data">
+                      <li><a>共 {{ page_obj.paginator.count }} 条</a></li>
+                  </ul>
+              </div>
+              <ul>
+{#                  {% if page_obj.has_previous %}#}
+{#                  <li class="active"><a href="{% url 'accounts:user_point_list' %}?page={{ page_obj.previous_page_number }}">上一页</a></li>#}
+{#                  {% else %}#}
+                  <li class="active"><a id="prev" href="javascript:valid(0);">上一页</a></li>
+{#                  {% endif %}#}
+{#                  {% for p in paginator.page_range %}#}
+{#                  <li><a href="{% url 'accounts:user_point_list' %}?page={{ p }}">{{ p }}</a></li>#}
+{#                  {% endfor %}#}
+{#                  {% if page_obj.has_next %}#}
+{#                  <li class="active"><a href="{% url 'accounts:user_point_list' %}?page={{ page_obj.next_page_number }}">下一页</a></li>#}
+{#                  {% else %}#}
+                  <li class="active"><a id="next" href="javascript:valid(0);">下一页</a></li>
+{#                  {% endif %}#}
+              </ul>
+          </div>
+{#        <div id="pagination" class="digg">#}
+{#        </div>#}
+    </div>
+    <br>
+    <!--/放置页码-->
+</div>
+<!--评论表单-->
+
+<h3 class="form-btn blue-text" ><a href="javascript:;" ><i class="el-edit icon-note"></i>我要留言 / 展开表单</a></h3>
+
+<div id="Coon" class="form-zd form-in">
+<!--表单开始-->
+	<form id="comment_form" url="{% url 'comment:comment' %}">
+   		<ul class="hdmenu">
+            
+            <li><i class="el-ok-sign icon-close"></i> 评论审核未开启哦！</li>
+            
+            <li><input name="jizhu" type="checkbox" value="1" checked class="comment-fuxuna" /> 记住信息</li> 
+            <li><input name="huifu" type="checkbox" value="1" checked class="comment-fuxuna" /> 邮件回复</li>
+        </ul>
+        <!----昵称------->
+{#        {% if not user.id %}#}
+        <div class="input-prepend">
+	        <i class="el-user icon-user"></i>
+	        <input name="u_name" type="text"  id="u_name" value="" size="16" datatype="*" sucmsg=" " placeholder="您的称呼（必须）" />
+        </div>
+{#        {% endif %}#}
+        <!------邮箱----->	
+        <div class="input-prepend">
+           <i class="el-envelope icon-envelope"></i>
+            <input name="u_mail" type="text"  id="u_mail" value="" size="16" placeholder="您的邮箱（选填）" />
+            <input name="mycity" type="text"  id="mycity" value="" style="display:none"/>
+        </div>
+        <!----网址------->	
+        <div class="input-prepend">
+           <i class="el-globe icon-globe"></i>
+            <input name="u_url" type="text"  id="u_url" size="16" value="" placeholder="您的网站（选填）" />
+        </div>
+        <!--隐藏input框-->
+        <input type="hidden" name="art_uid" id="art_uid" value="{{ object.uid }}">
+        <input type="hidden" name="u_code" id="u_code" value="">
+        <input type="hidden" name="u_recode" id="u_recode" value="">
+        <!--表情按钮-->
+        <div class="face-box">
+            <div id="face-btn"><a href="javascript:void(0);" ><img src="/static/picture/0.gif" width='25'/></a></div>
+            <textarea id="txtContent" name="txtContent" class="input" datatype="*" sucmsg=" " placeholder="说点什么吧..."></textarea>
+            <!--表情--------->
+			<div class="face-main" id="face-area" style="display:none;">
+				<ul class="face-tab clearfix">
+					<li><a href="javascript:void(0);" class="selected-a">默认</a></li>
+					<li><a href="javascript:void(0);">阿狸</a></li>	
+					<li><a href="javascript:void(0);">贴吧表情</a></li>
+				</ul>
+				<ul class="face-ul clearfix face_selected"></ul>
+				<ul class="face-ul clearfix" style="display:none;"></ul>
+				<ul class="face-ul clearfix" style="display:none;"></ul>
+				<ul class="face-ul clearfix" style="display:none;"></ul>
+				<a href="javascript:void(0);" class="face-close"><i class="el-remove"></i></a>
+			</div>
+        </div>
+        <a href="javascript:;" id="reply_over" onclick="reply_end()" style="display: none">取消回复</a>
+        <!--验证码-->
+        <div class="input-prepend yzm">
+	        <i class="el-question-sign"></i>
+            <input id="txtCode" name="txtCode" type="text" datatype="s4-4" errormsg="请填写4位验证码" sucmsg=" " onkeydown="if(event.ctrlKey&&event.keyCode==13){document.getElementById('btnSubmit').click();return false};"  />
+            <span title="点击刷新验证码?" style=" float: left;" class="img_code">
+                    <img src="{% url 'accounts:verify_code' %}" class="verify-code-img" data-src="{% url 'accounts:verify_code' %}" width="80" height="22" style="vertical-align:middle;" />
+
+            </span>
+	        
+        </div>
+        <!--提交表单--------->                
+        <div class="feed-sub"><input type="submit" class="btn btn-inverse" value="提交留言" onclick="return checkform()" />  </div>
+        <input id="turl" type="hidden" value="{% url 'article:content' object.uid %}?num={{ num }}&type=index" />
+        <input id="csrf" type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
+	</form>
+ <!--表单结束--> 	
+</div>
+
+            <script type="text/javascript">ajaxComment("#comment2","{% url 'comment:comment_load' %}?art={{ object.uid }}"); </script>
+        
+        <!--用户评论-->
+    <!--左侧结束-->
+    <!--右侧-->
+
+    {% endblock %}
+<!--=========右侧开始==========-->
+
+<!--=========右侧结束==========-->
+    <!--/右侧-->
+    <!--Header-->
+    <!---底部开始-->
+
+<!---END 底部开始-->
+    <!--/Header-->
+    {% block footjs %}
+    <script>
+{#  设置一个有名函数，在ajax中方面设置onclick的点击事件  #}
+    function reply(rly){
+        {#获取提前设置好的data-value的值，返回的是当前点击的一级评论的uid#}
+        let u_code = rly.getAttribute("data-value");
+        {#将值赋予给隐藏表单域，在提交的时候返回给后台#}
+        $('#u_code').val(u_code);
+        {#这时候在评论区下面显示取消评论的a标签#}
+        $('#reply_over').show()
+    }
+
+    {#  设置一个有名函数，在ajax中方面设置onclick的点击事件  #}
+    function self_reply(rly){
+        {#获取提前设置好的data-value的值，返回的是当前点击的一级评论的uid#}
+        let u_code = rly.getAttribute("data-value");
+        $('#u_code').val(u_code);{#将值赋予给隐藏表单域，在提交的时候返回给后台#}
+        {#获取提前设置好的data-value的值，返回的是当前点击的二级评论的uid#}
+        let u_recode = rly.getAttribute("data-revalue");
+        $('#u_recode').val(u_recode);{#将值赋予给隐藏表单域，在提交的时候返回给后台#}
+        $('#reply_over').show(){#这时候在评论区下面显示取消评论的a标签#}
+    }
+
+    {#a标签点击事件绑定该函数#}
+    function reply_end(){
+        {#清除一级，二级评论隐藏表单域的uid#}
+        $('#u_code').val('');
+        $('#u_recode').val('');
+        {#将取消回复按键隐藏#}
+        $('#reply_over').hide()
+    }
+
+    function clear_data() {
+        {#清除一级，二级评论隐藏表单域的uid#}
+        $('#u_code').val('');
+        $('#u_recode').val('');
+        {#将取消回复按键隐藏#}
+        $('#reply_over').hide();
+        $('#u_name').val('');
+        $('#u_mail').val('');
+        $('#mycity').val('');
+        $('#txtContent').val('');
+        $('#txtCode').val('');
+    }
+    {#$('.btn').click(function () {#}
+        {#清除一级，二级评论隐藏表单域的uid#}
+    {#    $('#u_code').val('');#}
+    {#    $('#u_recode').val('');#}
+        {#将取消回复按键隐藏#}
+    {#    $('#reply_over').hide();#}
+    {#    $('#u_name').val('');#}
+    {#    $('#u_mail').val('');#}
+    {#    $('#mycity').val('');#}
+    {#    $('#txtContent').val('');#}
+    {#    $('#txtCode').val('');#}
+    {# });#}
+    var page = 1;
+    $('#next').click(function () {
+
+        page++;
+        let count = '{{ page_obj.paginator.num_pages }}';
+        if (page <= count){
+            let csrf_token = $('#csrf').val();
+            SelfInitComment('#comment_list',page,csrf_token,'{% url "comment:comment_load" %}?art={{ object.uid }}',5)
+    }});
+
+    $('#prev').click(function () {
+
+        page--;
+        let count = '{{ page_obj.paginator.num_pages }}';
+        if (page > 0){
+            let csrf_token = $('#csrf').val();
+            SelfInitComment('#comment_list',page,csrf_token,'{% url "comment:comment_load" %}?art={{ object.uid }}',5)
+    }});
+
+
+    $('.verify-code-img').click(function() {
+            $(this).attr('src', $(this).attr('data-src') + '?t=' + new Date().getTime())
+        });
+    </script>
+
+    <script type="text/javascript">
+        document.getElementById("nav_54").className = "nav-active";
+    </script>
+    {% endblock %}

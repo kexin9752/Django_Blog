@@ -1,0 +1,311 @@
+{% extends 'base/base.html' %}
+        {% block container %}
+        <div class="swiper-container">
+			<ul class="slides swiper-wrapper">
+
+                <li class="swiper-slide img_loading">
+					<a href="/news/show-111.html" title="（2016-9-10更新）汪汪博客net源码下载">
+						<img src="/static/picture/201609171044440839.jpg" alt="（2016-9-10更新）汪汪博客net源码下载" />
+					</a>
+					<div class="swiper-pagination"></div>
+					<span class="silde-title" style="display:none;">（2016-9-10更新）汪汪博客net源码下载</span>
+				</li>
+                
+                <li class="swiper-slide img_loading">
+					<a href="/news/show-108.html" title="（2016-9-10更新）重磅！汪汪博客前台HTML模板放出">
+						<img src="/static/picture/201609131550365913.jpg" alt="（2016-9-10更新）重磅！汪汪博客前台HTML模板放出" />
+					</a>
+					<div class="swiper-pagination"></div>
+					<span class="silde-title" style="display:none;">（2016-9-10更新）重磅！汪汪博客前台HTML模板放出</span>
+				</li>
+                
+                <li class="swiper-slide img_loading">
+					<a href="/news/show-110.html" title="年轻人，不要再贷款买房了！">
+						<img src="/static/picture/201609131550004500.jpg" alt="年轻人，不要再贷款买房了！" />
+					</a>
+					<div class="swiper-pagination"></div>
+					<span class="silde-title" style="display:none;">年轻人，不要再贷款买房了！</span>
+				</li>
+                
+                <li class="swiper-slide img_loading">
+					<a href="/news/show-109.html" title="如果想做一件事，先别忙着发朋友圈">
+						<img src="/static/picture/201609131550179813.jpg" alt="如果想做一件事，先别忙着发朋友圈" />
+					</a>
+					<div class="swiper-pagination"></div>
+					<span class="silde-title" style="display:none;">如果想做一件事，先别忙着发朋友圈</span>
+				</li>
+                
+			</ul>
+			<div class="swiper-button-next"></div>
+			<div class="swiper-button-prev"></div>
+		</div>
+        <div class="arclist">
+		<h4 class="index-title homeh4"><a href=""><i class="el-certificate"></i>最新文章<small>New Article</small></a></h4>
+			<!--列表开始-->
+			<ul>
+                {% for item in art %}
+                <li {% if item.is_best %} id="tuijian" {% elif forloop.counter0 == 1 %}id="New"{% endif %}>
+                
+					<div class="arcimg">
+					    <img src="{{ item.img.url }}" alt="{{ item.title }}" title="{{ item.title }}">
+					</div>
+					<div class="arc-right">
+						<h4 class="blue-text"><a href="{% url 'article:content' item.uid %}?num={{ forloop.counter0 }}&type=index" title="{{ item.title }}">{{ item.title }}</a></h4>
+						<p>{{ item.content }}...</p>
+						<ul>
+							<li><a title="文章发表时间{{ item.created_at|date:'Y-m-d H:m:s ' }} "><i class="icon-calendar"></i> {{ item.created_at|date:'Y-m-d H:m:s ' }}</a></li>
+                            
+                            <li><a href="/news/show-158.html" title="作者： {{ item.author.name }}"><i class="icon-user"></i>{{ item.author.name }}</a></li>
+                            
+							<li><a href="/news/show-158.html" title="评论数"><i class="icon-speech" i="158"></i><em></em></a></li>
+							<li><a title="浏览数"><i class="icon-eye" i="158"></i><em>{{ item.view_count }}</em></a></li>
+							<li><a href="/news/53.html" title="查看分类"><i class="fa fa-th-list"></i>{{ item.classify.name }}</a></li>
+						</ul>
+					</div>
+				</li>
+                {% endfor %}
+                
+{#                <li id="New">#}
+{#                #}
+{#					<div class="arcimg">#}
+{#					    <img src="/static/picture/201609172046233802.png" alt="文档在线预览" title="文档在线预览">#}
+{#					</div>#}
+{#					<div class="arc-right">#}
+{#						<h4 class="blue-text"><a href="/news/show-136.html" title="文档在线预览">文档在线预览</a></h4>#}
+{#						<p>以前单独做一个OA系统的时候，后期客户要求工作审批模块增加上传off文档支持在线预览功能，由于第一次做，没什么经验，在网上找了很多关于在线预览的方法，不是要求安装插件就是要收费，后在根据一个列子也完成了在线预览的功能，但是必须服务器上需要安装off2008以上的版本才…</p>#}
+{#						<ul>#}
+{#							<li><a title="汪汪 2016-09-17 发表 "><i class="icon-calendar"></i> 2016-09-17</a></li>#}
+{#                            #}
+{#                            <li><a href="/news/show-136.html" title="作者： 汪汪"><i class="icon-user"></i>汪汪</a></li>#}
+{#                            #}
+{#							<li><a href="/news/show-136.html" title="评论数"><i class="icon-speech" i="136"></i><em>0</em></a></li>#}
+{#							<li><a title="浏览数"><i class="icon-eye" i="136"></i><em>0</em></a></li>#}
+{#							<li><a href="/news/54.html" title="查看分类"><i class="fa fa-th-list"></i>程序交流</a></li>#}
+{#						</ul>#}
+{#					</div>#}
+{#				</li>#}
+
+                
+			</ul>
+			<!--列表结束-->
+        </div>
+
+
+
+
+
+		<div class="sucailist mob-hidden">
+			<h4 class="index-title"><a href=""><i class="el-certificate"></i>最新素材<small>New sucai</small></a></h4>
+			<!--列表开始-->
+			<ul class="su">
+                
+                <li id="tuijian" class="su-li">
+                
+                    <a href="/down/show-157.html" title="全民经纪人">
+					<div class="sucaiimg img_loading">
+					    <img  src="/static/picture/201610092245507498.png" alt="全民经纪人"/>
+					</div>
+				  </a>
+					<div class="sucai-right">
+						<h4 class="blue-text">全民经纪人</h4>
+						<ul>
+							<li><a title=" 2016-10-09 发表 "><i class="el-time"></i> 2016-10-09</a></li>
+							<li class="mob-hidden">
+							</li>
+						</ul>
+					</div>
+				</li>
+                
+                <li id="tuijian" class="su-li">
+                
+                    <a href="/down/show-156.html" title="商家联盟连锁店会员积分管理系统">
+					<div class="sucaiimg img_loading">
+					    <img  src="/static/picture/201610092232547654.png" alt="商家联盟连锁店会员积分管理系统"/>
+					</div>
+				  </a>
+					<div class="sucai-right">
+						<h4 class="blue-text">商家联盟连锁店会员积分管理系统</h4>
+						<ul>
+							<li><a title=" 2016-10-09 发表 "><i class="el-time"></i> 2016-10-09</a></li>
+							<li class="mob-hidden">
+							</li>
+						</ul>
+					</div>
+				</li>
+                
+                <li id="tuijian" class="su-li">
+                
+                    <a href="/down/show-143.html" title="Atom ios7风格cms管理模板">
+					<div class="sucaiimg img_loading">
+					    <img  src="/static/picture/201609181306079508.png" alt="Atom ios7风格cms管理模板"/>
+					</div>
+				  </a>
+					<div class="sucai-right">
+						<h4 class="blue-text">Atom ios7风格cms管理模板</h4>
+						<ul>
+							<li><a title=" 2016-09-18 发表 "><i class="el-time"></i> 2016-09-18</a></li>
+							<li class="mob-hidden">
+							</li>
+						</ul>
+					</div>
+				</li>
+                
+                <li id="tuijian" class="su-li">
+                
+                    <a href="/down/show-142.html" title="Bootstrap响应CRM系统后台模板">
+					<div class="sucaiimg img_loading">
+					    <img  src="/static/picture/201609181254530530.png" alt="Bootstrap响应CRM系统后台模板"/>
+					</div>
+				  </a>
+					<div class="sucai-right">
+						<h4 class="blue-text">Bootstrap响应CRM系统后台模板</h4>
+						<ul>
+							<li><a title=" 2016-09-18 发表 "><i class="el-time"></i> 2016-09-18</a></li>
+							<li class="mob-hidden">
+							</li>
+						</ul>
+					</div>
+				</li>
+                
+                <li id="tuijian" class="su-li">
+                
+                    <a href="/down/show-141.html" title="Bootstrap后台系统模板Web应用程序框架">
+					<div class="sucaiimg img_loading">
+					    <img  src="/static/picture/201609181250459749.png" alt="Bootstrap后台系统模板Web应用程序框架"/>
+					</div>
+				  </a>
+					<div class="sucai-right">
+						<h4 class="blue-text">Bootstrap后台系统模板Web应用程序框架</h4>
+						<ul>
+							<li><a title=" 2016-09-18 发表 "><i class="el-time"></i> 2016-09-18</a></li>
+							<li class="mob-hidden">
+							</li>
+						</ul>
+					</div>
+				</li>
+                
+                <li id="tuijian" class="su-li">
+                
+                    <a href="/down/show-140.html" title="Web应用程序框架Bootstrap后台模板">
+					<div class="sucaiimg img_loading">
+					    <img  src="/static/picture/201609181200332169.png" alt="Web应用程序框架Bootstrap后台模板"/>
+					</div>
+				  </a>
+					<div class="sucai-right">
+						<h4 class="blue-text">Web应用程序框架Bootstrap后台模板</h4>
+						<ul>
+							<li><a title=" 2016-09-18 发表 "><i class="el-time"></i> 2016-09-18</a></li>
+							<li class="mob-hidden">
+							</li>
+						</ul>
+					</div>
+				</li>
+                
+                <li id="tuijian" class="su-li">
+                
+                    <a href="/down/show-139.html" title="Metronic">
+					<div class="sucaiimg img_loading">
+					    <img  src="/static/picture/201609181155329103.png" alt="Metronic"/>
+					</div>
+				  </a>
+					<div class="sucai-right">
+						<h4 class="blue-text">Metronic</h4>
+						<ul>
+							<li><a title=" 2016-09-18 发表 "><i class="el-time"></i> 2016-09-18</a></li>
+							<li class="mob-hidden">
+							</li>
+						</ul>
+					</div>
+				</li>
+                
+                <li id="tuijian" class="su-li">
+                
+                    <a href="/down/show-138.html" title="后台模板系列（5）">
+					<div class="sucaiimg img_loading">
+					    <img  src="/static/picture/201609181149465926.png" alt="后台模板系列（5）"/>
+					</div>
+				  </a>
+					<div class="sucai-right">
+						<h4 class="blue-text">后台模板系列（5）</h4>
+						<ul>
+							<li><a title=" 2016-09-18 发表 "><i class="el-time"></i> 2016-09-18</a></li>
+							<li class="mob-hidden">
+							</li>
+						</ul>
+					</div>
+				</li>
+                
+                <li id="tuijian" class="su-li">
+                
+                    <a href="/down/show-137.html" title="后台模板系列（4）">
+					<div class="sucaiimg img_loading">
+					    <img  src="/static/picture/201609181139440543.png" alt="后台模板系列（4）"/>
+					</div>
+				  </a>
+					<div class="sucai-right">
+						<h4 class="blue-text">后台模板系列（4）</h4>
+						<ul>
+							<li><a title=" 2016-09-18 发表 "><i class="el-time"></i> 2016-09-18</a></li>
+							<li class="mob-hidden">
+							</li>
+						</ul>
+					</div>
+				</li>
+                
+                <li id="New" class="su-li">
+                
+                    <a href="/down/show-132.html" title="懒人OA（改）">
+					<div class="sucaiimg img_loading">
+					    <img  src="/static/picture/201609141603018588.png" alt="懒人OA（改）"/>
+					</div>
+				  </a>
+					<div class="sucai-right">
+						<h4 class="blue-text">懒人OA（改）</h4>
+						<ul>
+							<li><a title=" 2016-09-14 发表 "><i class="el-time"></i> 2016-09-14</a></li>
+							<li class="mob-hidden">
+							</li>
+						</ul>
+					</div>
+				</li>
+                
+			</ul>
+			<!--列表结束-->
+		</div>
+        {% endblock %}
+    <!--左侧结束-->
+    <!--右侧-->
+
+    
+<!--=========右侧开始==========-->
+
+<!--=========右侧结束==========-->
+    <!--/右侧-->
+
+    <!--Header-->
+    <!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+<!---END 底部开始-->
+    <!--/Header-->
+    {% block footjs %}
+   <script type="text/javascript">
+       $(function () {
+           var swiper = new Swiper('.swiper-container', {
+               nextButton: '.swiper-button-next',
+               prevButton: '.swiper-button-prev',
+               pagination: '.swiper-pagination',
+               paginationType: 'fraction',
+               centeredSlides: true,
+               autoplay: 5500, //自动播放时间
+               autoHeight: true //自动高度
+           });
+           //瀑布流
+           $('.su').jaliswall({ item: '.su-li' });
+       });
+       ajaxEash(".icon-speech", "/", 0);
+       ajaxEash(".icon-eye", "/", 1);
+	</script>
+    {% endblock %}
