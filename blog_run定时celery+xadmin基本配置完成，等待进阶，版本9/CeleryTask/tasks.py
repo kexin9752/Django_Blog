@@ -57,7 +57,7 @@ def add(x,y):
     return x + y
 
 
-@shared_task
+@app.task(name='tasks.mul')
 def mul(x, y):
     print('乘法',x*y)
     return x * y

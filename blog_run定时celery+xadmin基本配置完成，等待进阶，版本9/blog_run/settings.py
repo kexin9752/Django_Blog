@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'ckeditor',
 	'ckeditor_uploader',
     'CeleryTask.apps.CelerytaskConfig',
-    'django_celery_beat',
+    'djcelery',
 ]
 
 MIDDLEWARE = [
@@ -214,19 +214,7 @@ CKEDITOR_CONFIGS = {
 # CELERY_RESULT_SERIALIZER = 'json'
 # CELERY_TIMEZONE = 'Asia/Shanghai'
 
-import djcelery
 
-djcelery.setup_loader()
-#使用本地redis服务器中的0号数据库，redis密码为123456
-BROKER_URL = 'redis://:123456@127.0.0.1:6379/0'
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-CELERY_RESULT_BACKEND = 'redis://:123456@127.0.0.1:6379/1'
-CELERY_ENABLE_UTC = False
-CELERY_TIMEZONE = 'Asia/Shanghai'
-CELERY_TASK_RESULT_EXPIRES = 10
-CELERYD_LOG_FILE = BASE_DIR + "/logs/celery/celery.log"
-CELERYBEAT_LOG_FILE = BASE_DIR + "/logs/celery/beat.log"
-CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
 
 # from celery.schedules import crontab
 # from celery.schedules import timedelta
@@ -238,3 +226,22 @@ CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
 #         'args':(),
 #     },
 # }
+
+
+import djcelery
+
+djcelery.setup_loader()
+
+#使用本地redis服务器中的0号数据库，redis密码为123456
+BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/1'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ENABLE_UTC = False
+CELERY_TIMEZONE = 'Asia/Shanghai'
+CELERY_TASK_RESULT_EXPIRES = 10
+# CELERYD_LOG_FILE = BASE_DIR + "/logs/celery/celery.log"
+# CELERYBEAT_LOG_FILE = BASE_DIR + "/logs/celery/beat.log"
+CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
+CELERY_IMPORTS = ("CeleryTask.tasks",)
