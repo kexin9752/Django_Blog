@@ -1,0 +1,255 @@
+{% load article_extras %}
+<aside class="myaside">
+    <!--关注我-->
+    <div class="focus-me bg-color animation-div">
+            <h4 class="index-title"><i class="el-heart fa fa-heart"></i>关注我<small>Focus Me</small></h4>
+		    <div class="xiangguan">
+				    <div><a class="benbo" href="javascript:;" target="_blank"><i class="icon-cloud-download"></i></a><span>My&nbspCSDN</span></div>
+				    <div><a class="taobao" href="javascript:;" target="_blank"><i class="icon-basket-loaded"></i></a><span>My&nbspGitHub</span></div>
+				    <div><a class="side-fx"><i class="icon-action-redo"></i></a><span>分享本博</span></div>
+				    <div><a class="mail-btn" href="javascript:;"><i class="icon-envelope"></i></a><span>订阅我</span></div>
+		    </div>
+		    <div class="mail-dy">
+			    <form action="http://list.qq.com/cgi-bin/qf_compose_send" method="post" target="_blank">
+				    <span>订阅</span>
+				    <input name="to" type="text" placeholder="输入邮箱点击订阅吧" onfocus="this.placeholder=''" onblur="this.placeholder='输入邮箱点击订阅吧'">
+				    <i class="icon-envelope el-envelope"><input value=" " type="submit"></i>
+			    </form>
+			    <i class="fa fa-times el-remove fx-close"></i>
+		    </div>
+		    <div class="bd-fx side-bdfx ">
+			    <i class="fa fa-times el-remove fx-close"></i>
+			    <ul class="bdsharebuttonbox bdshare-button-style1-32" data-bd-bind="1472956810753">
+				    <li><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></li>
+				    <li><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a></li>
+				    <li><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></li>
+				    <li><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a></li>
+			    </ul>
+                <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "32" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+		    </div>
+        </div>
+    <style>
+            #cnzz_stat_icon_1260419029 a{display:none;}
+            .cnzz_a1{    display: block;font-weight: bold;line-height: 18px;font-size:16px;}
+            .cnzz_load{display:inline-block;width:15px;height:15px;background:url(/static/images/loading-small.gif)no-repeat center;background-size:100%;}
+        </style>
+    <div class="web-author bg-color animation-div">
+		    <div class="author-tx">
+                {% if not user.id %}
+                <a class="img-circle" href="{% url 'accounts:user_login' %}" title="还未登录，快去登录吧">
+
+                        <img class="img-circle" src="/static/picture/ava.gif">
+
+			    </a>
+                {% else %}
+			    <a class="img-circle" href="{% url 'accounts:user_center_index' %}" title="点击查看详细信息">
+
+                        <img class="img-circle" src="/static/picture/ava.gif">
+
+			    </a>
+                {% endif %}
+		    </div>
+
+
+            <div class="author-name" style="text-align: center;">
+                {% if not user.id %}
+                <a href="{% url 'accounts:user_login' %}"><span class="blue-text">登录</span>&nbsp;</a>&nbsp;|&nbsp;
+                <a href="{% url 'accounts:user_register' %}"><span class="blue-text">注册</span></a>
+                <p>登录后即可点击头像进入用户中心</p>
+                {% else %}
+                 <a href="{% url 'accounts:user_center_index' %}"><span class="blue-text">{{ user.username }}</span></a>
+                <p>欢迎来到 &nbsp KevIn`s Blog</p>
+                {% endif %}
+            </div>
+
+		    <div class="data-info">
+			    <ul>
+				    <li><strong id="myday">待定</strong><span>运行天数</span></li>
+				    <li>
+                        <strong id="strong_ip">
+                            <b class="cnzz_load"></b>
+                            <script type="text/javascript">
+                                var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+                                document.write(unescape("%3Cspan id='cnzz_stat_icon_1260419029'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1260419029%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));
+                            </script>
+                        </strong>
+                        <span>今日访问ip</span>
+                    </li>
+				    <li style="display:none"><strong id="myip">2</strong><span>今日访问ip</span></li>
+				    <li><strong id="newcount">{{ art_count }}</strong><span>文章数量</span></li>
+			    </ul>
+		    </div>
+            <script type="text/javascript">
+                $(function () {
+                    setTimeout(function () {
+                        var cnzz_a = $("#cnzz_stat_icon_1260419029").find("a");
+                        var alen = cnzz_a.length;
+                        for (var k = 0; k <= alen; k++) {
+                            cnzz_a.eq(k).addClass("cnzz_a" + k);
+                        }
+                        $(".cnzz_a0,.cnzz_a2").remove();
+                        var str = $(".cnzz_a1").text();
+                        str = str.substring(8, 12);
+                        $(".cnzz_a1").text(str);
+
+                        if (!$("#cnzz_stat_icon_1260419029").html() == "") {
+                            $(".cnzz_load").remove();
+                            cnzz_a.show();
+                        }
+                    }, 1000)
+                });
+              setInterval(function() {
+                  var now = (new Date()).toLocaleString();
+                  $('#current-time').text(now);
+              }, 1000);
+            </script>
+            <!--搜索-->
+            <div class="search animation-div">
+                <div class="form_div">
+	                <div class="search-index">
+			            <input name="keyword" onfocus="lookup(this.value);" type="text" id="keyword" class="form-control search-box fr" onkeydown="if(event.keyCode==13){SiteSearch('/search.html', '#keyword');return false};" placeholder="输入关键字搜索">
+			            <i class="el-search" onclick="SiteSearch('/search.html', '#keyword');"><input value=" " type="submit"></i>
+		            </div>
+                </div>
+            </div>
+            <!--最新更新-->
+
+            <div class="clos-new bg-color animation-div">
+	            <h4 class="index-title"><i class="el-bulb fa fa-lightbulb-o"></i>最新更新<small>Close New</small></h4>
+	            <ul id="article_new">
+
+                    <li><i class="el-cloud fa fa-sun-o"></i><iframe id="tianqi" scrolling="no" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&amp;id=34&amp;icon=1&amp;num=3"></iframe></li>
+                    <li><i class="el-calendar fa fa-calendar"></i>时间在流逝（<a class="orange-text" id="current-time">0</a>）</li>
+                    <li><span><i class="el-arrow-up fa fa-paper-plane-o"></i>最近：<font class="blue-text">{{ new_art.author.name }}</font> {{ new_art.created_at }}</span><a href="/article/content/{{ new_art.uid }}/?num=1" title="{{ new_art.title }}">更新了<b class="lable">文章</b></a></li>
+                </ul>
+            </div>
+
+            {% verbatim myblock %}
+            <!--说说-->
+            <div class="bg-color animation-div">
+	            <h4 class="index-title"><i class="el-headphones icon-earphones"></i>说说<small>Shuo Shuo</small></h4>
+	            <div class="shuo-side">
+		            <ul id="write_some">
+                        <li id="Hots" v-for="(write,i) in data_list">
+				            <span v-bind:class="'shuobg'+(i+1)"><strong>{{ write.created_at|date:'Y-m' }} </strong></span>
+				            <div>
+                                <a href="" title="">{{ write.content }}</a>
+                                <b title="点击量">({{ write.view_count }})</b>
+                            </div>
+			            </li>
+		            </ul>
+	            </div>
+            </div>
+            <!--推荐图文-->
+            <div class="article-push  bg-color animation-div">
+	            <h4 class="index-title"><i class="el-asl fa fa-fire"></i>推荐图文<small>Push Article</small></h4>
+
+                <ul id="article_best">
+                    <li v-for="art in data_list">
+			            <div class="arcimg">
+				            <a v-bind:href="'/article/content/'+art.uid+'/?num=0'" title="">
+                                <img v-bind:src="art.img">
+                            </a>
+			            </div>
+			            <div class="arc-right">
+				            <h4 class="blue-text"><a v-bind:href="'/article/content/'+art.uid+'/?num=0'">{{ art.title }}</a></h4>
+				            <p>{{ art.content }}</p>
+				            <ul>
+					            <li><a title="发表于{{ art.created_at }}"><i class="el-time icon-calendar"></i>{{ art.created_at }}</a></li>
+					            <li><a title="{{ art.view_count }}次浏览"><i class="el-fire icon-fire"></i>{{ art.view_count }}</a></li>
+				            </ul>
+			            </div>
+		            </li>
+	            </ul>
+	            {% endverbatim myblock %}
+            </div>
+            <!--文章排行tab-->
+            <div class="mytab bg-color animation-div">
+	            <div class="tab-btn">
+                    <a class="hd-btn tab-active" href="javascript:;" title=""><i class="el-comment-alt icon-bubbles"></i>互动信息</a>
+                    <a class="ph-btn" href="javascript:;" title=""><i class="el-signal icon-bar-chart"></i>文章排行</a>
+                </div>
+                {% verbatim rankblock %}
+	            <ul class="hudong-ul" style="display: block;" id="note_msg">
+                    <!--=======查询相册=============-->
+
+                    <li v-for="note in data_list">
+			            <div class="sd-tx">
+				            <a href="javascript:;" target="_blank" rel="nofollow">
+					            <img v-bind:src="'/static/images/Portrait/'+note.img+'.jpg'" class="img-circle">
+				            </a>
+			            </div>
+			            <div class="sd-name">
+		                    <span><i class="el-user icon-user"></i>{{ note.u_name }}<time>&nbsp{{ note.created_at }}</time></span>
+				            <a class="blue-text comment_txt" href="/system/feed/back/" title="点击进入留言板">{{ note.txtContent }}</a>
+			            </div>
+		            </li>
+
+	            </ul>
+	            <!--文章排行-->
+
+	            <ul class="paihang-ul" style="display: none;" id="article_rank">
+
+                    <li v-for="article in data_list"><span></span><a v-bind:href="'/article/content/'+article.uid+'/?num=0'" title="article.title">{{ article.title }}<b>({{ article.view_count }})</b></a></li>
+
+	            </ul>
+
+	        </div>
+            <!--标签-->
+            <div class="cloud bg-color animation-div">
+                <h4 class="index-title"><i class="el-tags icon-tag"></i>标签云<small>Tags Clouds</small></h4>
+
+                <ul id="tag_cloud">
+                      <li v-for="(tag,i) in data_list">
+                          <a href= "#" v-bind:title="tag.name">{{ tag.name }}</a>
+                      </li>
+	            </ul>
+            </div>
+
+            <!--友情链接-->
+            <div class="side-link ">
+	            <h4 class="index-title"><i class="el-paper-clip icon-paper-clip"></i>友情链接
+                    <small>Friend Links</small>
+                    <a href="/system/link/"><i class="el el-plus icon-direction"></i>申请</a>
+                </h4>
+	            <ul id="web_link">
+
+                        <li><a href='{% url "index" %}' target='_blank' title="">KevIn`s Blog</a> </li>
+                        <li v-for="link in data_list"><a href='link.web_link' target='_blank' title="">{{ link.web_name }}</a> </li>
+	            </ul>
+            {% endverbatim rankblock %}
+            </div>
+	    </div>
+</aside>
+
+<script type="text/javascript" src="/static/js/vue.min.js"></script>
+<script type="text/javascript" src="/static/js/vue-resource.js"></script>
+<script>
+    Vue.use(VueResource);
+    function api_request(id,URLobj) {
+        var vue = new Vue({
+        el:id,
+        data:{
+            data_list:[]
+        },
+        created:function () {
+            this.$http.get(URLobj).then(
+                function (data) {
+                    this.data_list = data.data.data;
+                },
+                function (error) {
+                    console.log(error)
+                }
+            )
+        }
+    })
+    }
+    api_request('#article_best','/API/art/?status=art_best');
+    api_request('#article_rank','/API/art/?status=art_list');
+    api_request('#article_new','/API/art/?status=art_new');
+    api_request('#write_some','/APIwrite_some/');
+    api_request('#note_msg','/APInote_msg/');
+    api_request('#tag_cloud','/APItag/');
+    api_request('#web_link','/APIlink/');
+
+</script>

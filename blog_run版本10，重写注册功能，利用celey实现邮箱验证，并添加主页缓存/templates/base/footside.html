@@ -1,0 +1,140 @@
+<footer>
+    {% verbatim footblock %}
+	<div class="footer-area">
+	<!--博客相关-->
+
+	<div class="about-blog">
+		<h4>素材排行</h4>
+		<div class="ft-part1">
+			<!--文章排行-->
+				<ul class="paihang-ul" style="display:block;width:100%;" id="mall_rank">
+
+                    <li v-for="goods in foot_data_list"><span></span><a v-bind:href="'/mall/down/content/'+goods.uid+'/?num=0'" v-bind:title="goods.goods_name"> {{ goods.goods_name }}<b>({{ goods.view_count }})</b></a></li>
+
+				</ul>
+		</div>
+	</div>
+	<!--最新留言-->
+	<div class="close-fd mob-hidden">
+		<h4>留言频道</h4>
+		<ul id="foot_msg">
+
+            <li v-for="foot_note in foot_data_list">
+                <div class="sd-tx">
+                    <a href="javascript:;" target="_blank" rel="nofollow">
+                        <img v-bind:src="'/static/images/Portrait/'+foot_note.img+'.jpg'" class="img-circle">
+                    </a>
+                </div>
+                <div class="sd-name">
+                    <span><i class="el-user icon-user"></i>{{ foot_note.u_name }}</span>
+                    <a class="blue-text comment_txt" href="/system/feed/back/" title="点击进入留言板">{{ foot_note.txtContent }}</a>
+                </div>
+            </li>
+
+        </ul>
+	</div>
+
+	<!--图文频道-->
+	<div class="tuwen-pd mob-hidden">
+		<h4>图文频道</h4>
+		<ul id="article_random">
+
+            <li v-for="art_ran in foot_data_list">
+			    <a v-bind:href="'/article/content/'+art_ran.uid+'/?num=0'" v-bind:title="art_ran.title">
+			    <img v-bind:src="art_ran.img" v-bind:alt="art_ran.title" v-bind:title="art_ran.title" class="img-circle"/>
+			    </a>
+		    </li>
+
+		</ul>
+	</div>
+		<!--数据统计-->
+	<div class="data-count ">
+		<h4>数据统计</h4>
+		<ul>
+			<li><span><i class="el-picture icon-social-twitter"></i>图片数量：</span><a title="相册" class="footer_picture"></a><span id="photo">11</span> 张</li>
+			<li><span><i class="el-headphones icon-social-twitter"></i>说说数量：</span><a title="说说" class="footer_headphones"></a><span id="my_write">11</span> 条</li>
+			<li><span><i class="el-pencil icon-social-twitter"></i>文章数量：</span><a title="文章" class="footer_pencil"></a><span id="article">11</span> 篇</li>
+			<li><span><i class="el-comment icon-social-twitter"></i>留言数量：</span><a title="留言数" class="footer_comment"></a><span id="note">11</span> 条</li>
+			<li><span><i class="el-comment-alt icon-social-twitter"></i>评论数量：</span><a title="评论数" class="footer_comment_alt"></a><span id="comment">11</span> 条</li>
+			<li><span><i class="el-paper-clip icon-social-twitter"></i>素材个数：</span><a title="素材" class="footer_paper_clip"></a><span id="mall">11</span> 个</li>
+			<!--<li><span><i class="el-cog icon-social-twitter"></i>运行天数：</span><a title="汪汪博客 已正常运行 312 天">312</a> 天</li>
+			<li><span><i class="el-adjust-alt icon-social-twitter"></i>访问统计：</span><a title="累计访问116,900">116,900</a> 次</li>-->
+		</ul>
+	</div>
+
+	</div>
+    {% endverbatim footblock %}
+	<!--底部导航-->
+	<div class="foot-nav">
+		<div class="copy-right"><span >CopyRight © 2015-2016 冠美博客     Design by coseo.cn</span></div>
+		<div class="bottom-nav">
+			<span>
+                <a href="http://tongji.baidu.com/web/welcome/ico?s=a085b9cd4641b33068c03a9dd42ed1af" target="_blank">百度统计</a><!--
+                -
+                <script type="text/javascript">                    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan id='cnzz_stat_icon_1260419029'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1260419029' type='text/javascript'%3E%3C/script%3E"));</script>
+                -
+                --><a href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action"> 浙ICP备15008004号-1</a>
+            </span>
+		</div>
+	</div>
+<div  id="toTop">Back to Top</div>
+<script type="text/javascript" src="/static/js/vue.min.js"></script>
+<script type="text/javascript" src="/static/js/vue-resource.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        $(".img_loading").removeClass("img_loading");
+        $(".silde-title").show();
+
+        $(".comment_txt").each(function () {
+            $(this).html($(this).html().replace(/\[Q([0-9]*)\]/g, "<img src='/static/picture/$1.gif'/>"));
+            $(this).html($(this).html().replace(/\[yc_([0-9]*)\]/g, "<img src='/static/picture/$1.gif'/>"));
+            $(this).html($(this).html().replace(/\[ali_([0-9]*)\]/g, "<img src='/static/picture/$1.gif'/>"));
+        })
+        //$("#comment_txt").text($("#comment_txt").text().replace(/\[Q([0-9]*)\]/g, "<img src='/static/picture/$1.gif'/>"));
+        //$("#comment_txt").text($("#comment_txt").text().replace(/\[yc_([0-9]*)\]/g, "<img src='/static/picture/$1.gif'/>"));
+        //$("#comment_txt").text($("#comment_txt").text().replace(/\[ali_([0-9]*)\]/g, "<img src='/static/picture/$1.gif'/>"));
+        //document.getElementById('comment_txt').innerHTML = document.getElementById('comment_txt').innerHTML.replace(/\[Q([0-9]*)\]/g, "<img src='/static/picture/$1.gif'/>");
+        //document.getElementById('comment_txt').innerHTML = document.getElementById('comment_txt').innerHTML.replace(/\[yc_([0-9]*)\]/g, "<img src='/static/picture/$1.gif'/>");
+        //document.getElementById('comment_txt').innerHTML = document.getElementById('comment_txt').innerHTML.replace(/\[ali_([0-9]*)\]/g, "<img src='/static/picture/$1.gif'/>");
+    };
+
+    Vue.use(VueResource);
+    function foot_api_request(id,URLobj) {
+        var vue = new Vue({
+        el:id,
+        data:{
+            foot_data_list:[]
+        },
+        created:function () {
+            this.$http.get(URLobj).then(
+                function (data) {
+                    this.foot_data_list = data.data.data;
+                },
+                function (error) {
+                    console.log(error)
+                }
+            )
+        }
+    })
+    }
+    foot_api_request('#foot_msg','/APInote_msg/');
+    foot_api_request('#mall_rank','/APIgoods/');
+    foot_api_request('#article_random','/API/art/?status=article');
+    $.ajax({
+        url:'/API/count/',
+        type:'get',
+        success:function (data) {
+            $('#photo').text(data.data.photo_count);
+            $('#my_write').text(data.data.write_count);
+            $('#article').text(data.data.art_count);
+            $('#comment').text(data.data.comment_count);
+            $('#note').text(data.data.note_count);
+            $('#mall').text(data.data.goods_count)
+
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+</script>
+</footer>
