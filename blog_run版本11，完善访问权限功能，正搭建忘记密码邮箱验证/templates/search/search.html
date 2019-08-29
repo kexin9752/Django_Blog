@@ -1,0 +1,97 @@
+{% extends 'base/base.html' %}
+{% load article_extras %}
+{% load highlight %}
+{% block title %}
+    <title>KevIn`s Blog</title>
+{% endblock %}
+{% block link0 %}
+    <style>
+        span.highlighted { color: red; }
+    </style>
+{% endblock %}
+
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+
+<!--导航结束-->
+
+<!--/Header-->
+<!--主题框架开始-->
+{% block content %}
+<div class="container">
+    <!--左侧开始-->
+	<section class="mysection">
+        <div class="arclist">
+            <!--取得一个DataTable-->
+            
+            <!--取得分页页码列表-->
+            
+            <h4 class="search-title bg-color"><a href="#"><i class="el-certificate"></i>搜索关健字：<font color="#DC4900">的</font></a><span style="float:right;">共有 <b class="red">1</b> 条记录</span></h4>
+			<!--列表开始-->
+            
+            <ul>
+            {% if query %}
+                {% for result in page.object_list %}
+                <li>
+					<div class="arcimg">
+					    <img src="{{ result.object.img.url }}">
+					</div>
+					<div class="arc-right">
+						<h4 class="blue-text"><a href="{% url 'article:content' result.object.uid %}?num=0">{% highlight result.object.title with query %}</a></h4>
+						<p>{% highlight result.object.content with query %}</p>
+						<ul>
+							<li><a title=" {{ result.object.created_at }} 发表 "><i class="icon-calendar"></i><em>{{ result.object.created_at|date:'Y-m-d H:m:s' }}</em></a></li>
+							
+							<li><a href="#" title="评论数"><i class="icon-speech" i="169"></i><em>{{ result.object.comment.all.count }}</em></a></li>
+							<li><a title="浏览数"><i class="icon-eye" i="169"></i><em>{{ result.object.view_count }}</em></a></li>
+							<li><a href="{% url 'article:article_list' %}?type={{ result.object.classify.code }}" title="查看分类"><i class="fa fa-th-list"></i>{{ result.object.classify.name }}</a></li>
+						</ul>
+					</div>
+				</li>
+                {% empty %}
+                <li>没有找到相关内容</li>
+                {% endfor %}
+            {% endif %}
+			</ul>
+            
+			<!--列表结束-->
+        </div>
+        <div class="pagination">
+            <!--页码列表-->
+              <div class="list-page"><ul class="post-data"><li><a>共 1 条</a></li></ul></div><ul><li class="active"><a>上一页</a></li><li><a>1</a></li><li class="active"><a>下一页</a></li></ul>
+            <!--/页码列表-->
+        </div>
+    </section>
+    <!--左侧结束-->
+    <!--右侧-->
+    <script type="text/javascript" src="/static/js/common.js"></script>
+    
+<!--=========右侧开始==========-->
+{% include 'base/rside.html' %}
+<!--=========右侧结束==========-->
+    <!--/右侧-->
+</div>
+{% endblock %}
+    <!--Header-->
+    <!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+
+<!---END 底部开始-->
+    <!--/Header-->
+{% block footjs %}
+    <script type="text/javascript">
+        ajaxEash(".icon-speech", "/", 0);
+        ajaxEash(".icon-eye", "/", 1);
+    </script>
+{% endblock %}

@@ -1,0 +1,189 @@
+{% extends 'user_base/user_base.html' %}
+{% block title %}
+    <title>编写文章 - KevIn`s Blog</title>
+{% endblock %}
+{% block link %}
+    <script type="text/javascript" src="/static/ckeditor/ckeditor/ckeditor.js"></script>
+{% endblock %}
+
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+
+<!--导航结束-->
+
+<!--/Header-->
+
+
+    <!--/左侧导航-->
+    
+    <!--右侧内容-->
+{% block content %}
+    <div class="member-redpack fr w955">
+      
+      <!--积分兑换-->
+      <h3 class="operate-title mt20">编写文章</h3>
+      <div class="operate-items mt20">
+          <a class="j-item now" href="#">发布文章</a>
+          <a class="j-item " href="{% url 'accounts:user_article_list' %}?status=pass">我的文章</a>
+      </div>
+      <div class="orders j-orders" style="display: block;">
+        
+          <link rel="stylesheet" href="/static/css/validate.css" />
+          <script type="text/javascript" src="/static/scripts/jquery/jquery.form.min.js"></script>
+          <script type="text/javascript" src="/static/scripts/jquery/Validform_v5.3.2_min.js"></script>
+          <script type="text/javascript">
+			$(function(){
+			  //初始化表单
+			  AjaxInitForm('#pointForm', '#btnSubmit', 1, '#turl');
+			});
+		  </script>
+          <input id="hideAmount" name="hideAmount" type="hidden" value="{{ user.integral }}" />
+          <input id="hideCashrate" name="hideCashrate" type="hidden" value="10" />
+
+          <form action="{% url 'accounts:user_article_edit' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <div class="form-box">
+              <dl><dd>
+              <input type="text" name="title" placeholder="文章标题" value="{{ art.title|default_if_none:'' }}" required>
+              </dd></dl>
+              <dl><dd>
+                  <input type="text" id="addtag" maxlength="5" placeholder="添加标签">
+                  <a href="#" id="addtags" class="btn btn-danger">确定</a>
+                  <span class="article_tag">
+                    <ul id="tagarea" style="display: inline">
+
+                    </ul>
+                </span>
+              </dd></dl>
+              <dl><dd>
+                  <select name="classify" id="" style="width: 282px;height: 34px" required>
+                      <option value="">选择分类</option>
+                      {% for c in classify %}
+                      <option value="{{ c.code }}" {% if art.classify.code == c.code %}selected="selected"{% endif %}>{{ c.name }}</option>
+                      {% endfor %}
+                  </select>
+              </dd></dl>
+              <dl><dd>
+                        <div class="webuploader-pick">设置封面图片：<span style="color: yellow;font-size: x-small">点击下方灰色区域选择图片</span></div>
+                        <input type="file" id="avatarSlect" onchange="viewImage('target')" name="img" style="display: none" class="webuploader-element-invisible" accept="image/*">
+               </dd></dl>
+               <dl><dd>
+                <span style="color: red">注意:如果不上传文章封面，将会自动生成默认文章封面</span>
+                <div class="cropper-box">
+                      <img id="target" src="/static/images/avatar-bg.png" onclick="openFile('avatarSlect')" width="350" height="250" />
+{#                    <img id="target" {% if art.img %} src="{{ art.img.url }}" {% else %} src="/static/images/avatar-bg.png"{% endif %} onclick="openFile('avatarSlect')" width="350" height="250" />#}
+                </div>
+               </dd></dl>
+              <dl><dd>
+              <textarea name="content" id="" class="ckeditor" cols="30" rows="10" required>{{ art.content|safe|default_if_none:'' }}</textarea>
+              </dd></dl>
+              <dl><dd>
+                  <div class="webuploader-pick">保存至草稿箱</div>
+                    <div id="" style="position: absolute; top: 0px; left: 0px; width: 116px; height: 34px; overflow: hidden; bottom: auto; right: auto;">
+                        <input type="submit" id="draft_subbtn" name="caogao" style="display: none" class="webuploader-element-invisible">
+                        <label for="draft_subbtn" style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label>
+                    </div>
+              </dd></dl>
+                <dl><dd>
+                <div class="webuploader-pick">发布文章</div>
+                    <div id="" style="position: absolute; top: 0px; left: 0px; width: 116px; height: 34px; overflow: hidden; bottom: auto; right: auto;">
+                        <input type="submit" id="subbtn" name="fabu" formaction="" style="display: none" class="webuploader-element-invisible">
+                        <label for="subbtn" style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label>
+                    </div>
+                </dd></dl>
+          </div>
+              <input type="hidden" name="article_id" value="{{ art.id }}">
+          </form>
+{#          <input id="turl" name="turl" type="hidden" value="/user/point/convert.html" />#}
+        
+      </div>
+      <!--/积分兑换-->
+      
+      
+    </div>
+{% endblock %}
+    <!--/右侧内容-->
+
+
+    <!--Footer-->
+    <!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+
+<!---END 底部开始-->
+    <!--/Footer-->
+{% block footjs %}
+
+    <script type="text/javascript">
+
+        var photoId;
+        function openFile(e) {
+            photoId=e;
+            document.getElementById(photoId).click();
+        }
+        function viewImage(e) {
+            var file = $("#"+photoId).prop('files')[0];
+            if (file) {
+                // image = file; //用于确定信息时确保是否已上传图片
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = function (even) {
+                    $('#'+e).attr("src", even.currentTarget.result);
+                    {#addBox(e);#}
+                }
+            }
+        }
+
+        {#function noFue(val){#}
+    	{#	document.getElementById('balance').value = parseInt(val) >= 0 ? val : 0;#}
+	    {# }#}
+        var tag_num = 0;
+        $('#addtags').click(function () {
+            tag_num++;
+            if(tag_num <= 3){
+                let tag = $('#addtag').val();
+                let taghtml = '<a class="mytag" onclick="tagdel(this)" title="点击删除此标签" href="javascript:;"><li style="color:white">'+tag+'<input type="hidden" name="tags" value="'+tag+'"></li></a>';
+                $('#tagarea').append(taghtml);
+                $('#addtag').val('');
+            }else {
+                $('#addtag').val('');
+                $('#addtag').attr('disabled','true');
+                dialog({title:'提示', content:'最多只能添加三个标签', okValue:'确定', ok:function (){}}).showModal()
+            }
+        });
+
+        function tagdel(thistag){
+            thistag.remove();
+            $('#addtag').removeAttr('disabled');
+            tag_num--
+        }
+
+        $(function () {
+            $(".myarticle").addClass("demo-dd-a-now");
+        });
+
+
+    </script>
+    <script type="text/javascript" src="/static/js/vue.min.js"></script>
+    <script>
+    {#    var Vue = new Vue({#}
+    {#    el:'#app',#}
+    {#    data:{#}
+    {#        message:"123",#}
+    {#    }#}
+    {# })#}
+    </script>
+
+
+{% endblock %}
