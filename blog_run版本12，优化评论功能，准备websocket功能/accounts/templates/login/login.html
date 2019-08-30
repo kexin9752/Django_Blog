@@ -1,0 +1,126 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    <title>KevIn`s Blog</title>
+{% endblock %}
+{% block link %}
+    <link rel="stylesheet" href="/static/css/index.css"/>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" charset="utf-8" src="/static/js/common.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/js/login-validate.js"></script>
+{% endblock %}
+<!--Header-->
+
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+
+<!--导航结束-->
+
+<!--/Header-->
+<!--主题框架开始-->
+{% block content %}
+<div class="container">
+    <div class="head fl wfs">
+         <div class="cover-page-wrapper">
+            <a class="fl" href="{% url 'index' %}">
+                <img src="/static/picture/111.png" title="KevIn`s Blog" alt="KevIn`s Blog" />
+           </a>
+            <form id="searchForm" name="searchForm" class="search-product fl">
+                <input name="keywords" type="text" id="keyword" onkeydown="if(event.keyCode==13){SiteSearch('/search.html', '#keyword');return false};" placeholder="输入关键字搜索" class="form-control search-box"/>
+                <input class="submit" type="submit" onclick="SiteSearch('/search.html', '#keyword');"  style="border:none; cursor:pointer;"> 
+            </form>
+            <font id="ECS_MEMBERZONE">
+              <div class="head-operates-logined fr">
+                  <a href="{% url 'index' %}" class="login">主页</a>
+             </div>
+            </font>
+         </div>
+    </div>
+
+    <div class="blank"></div>
+    <div class="fl wfs bcf7">
+        <div class="regist-process-wrapper">
+            <div class="regist-process-body fl wfs">
+
+                    <form action="{% url 'accounts:user_login' %}" method="post">
+                    <div class="regist-process-login-left fl">
+                        <h2 class="title">登录</h2>
+{#                        id="loginform" name="formLogin" #}
+
+
+                          <div class="form-group">
+                              <span style="color: red;background: white"></span>
+                              <input class="form-control text" name="username" type="text" placeholder="用户名/手机/邮箱">
+                              <i class="icon-user"></i>
+                          </div>
+                          <div class="form-group">
+                              <span style="color: red;background: white">{{ form.non_field_errors }}</span>
+                               <input class="form-control text" name="password" type="password" placeholder="输入登录密码">
+                               <i class="icon-key"></i>
+
+                          </div>
+                          <div class="form-group">
+                              <span style="color: red;background: white">{{ form.errors.verify_code }}</span>
+                               <input class="form-control text" name="verify_code" type="text" placeholder="输入验证码" >
+
+{#                              <input type="text" id="txtCode" name="verify_code" class="form-control text fl" style="width: 115px;" placeholder="输入验证码" datatype="s4-20" />#}
+                                <a class="send" title="点击切换验证码" href="javascript:;" style="display: inline-block">
+                                <img src="{% url 'accounts:verify_code' %}" alt="captcha" class="fl verify-code-img" data-src="{% url 'accounts:verify_code' %}" style="cursor: pointer; margin-top: 25px; margin-left: 10px;" />
+                                </a>
+                               <i class="icon-key" ></i>
+                          </div>
+                            {% csrf_token %}
+{#                    这应该是之前遗留下来的一个vue请求     id="btnSubmit"#}
+                          <input type="submit" class="btn btn-danger login-btn" value="登录" />
+
+                         <div class="operates fl wfs">
+                              <a class="fr" href="{% url 'system:forget_password' %}">忘记密码</a>
+                              <input id="turl" name="turl" type="hidden" value="http://blog.coseo.cn/login.html" /><!--记住上一页网址-->
+                              <p>
+                                  <label>
+                                    <input type="checkbox" name="remember" id="chkRemember" value="on" />下次自动登录<span>使用公用电脑勿选</span>
+                                  </label>
+                              </p>
+                              <div id="msgtips" class="col tips"></div>
+                        </div>
+                        <div class="other-login fl">
+                            <!--取得一个DataTable-->
+                           <h3>第三方登录正在申请中。。。</h3>
+
+                       </div>
+                    </div>
+                    </form>
+                <div class="regist-process-login-right fr">
+                    <h2 class="title">没有账号？立即注册</h2>
+                    <a class="btn btn-info free-registe" href="{% url 'accounts:user_register' %}">免费注册</a>
+                    <img class="mid-r-img" src="/static/picture/register-reg-4.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block footjs %}
+    <script>
+    $('.verify-code-img').click(function() {
+            $(this).attr('src', $(this).attr('data-src') + '?t=' + new Date().getTime())
+        });
+
+    </script>
+{% endblock %}
+<!--Header-->
+<!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+
+<!---END 底部开始-->
+<!--/Header-->

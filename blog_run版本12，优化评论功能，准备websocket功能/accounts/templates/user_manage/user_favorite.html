@@ -1,0 +1,129 @@
+{% extends 'user_base/user_base.html' %}
+{% block title %}
+    <title>我的收藏 - KevIn`s Blog</title>
+{% endblock %}
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+<!--导航结束-->
+
+<!--/Header-->
+
+
+    <!--/左侧导航-->
+    
+    <!--右侧内容-->
+{% block content %}
+    <div class="member-redpack fr w955">
+        <link href="/static/css/paginations.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+	    function ExecPostBack(checkValue) {
+		    if (arguments.length == 1) {
+			    ExecDelete('{% url "accounts:user_collect_del" %}', checkValue, '#turl','#csrf');
+		    }else{
+			    var valueArr = '';
+			    $("input[name='checkId']:checked").each(function(i){
+				    valueArr += $(this).val();
+				    if(i < $("input[name='checkId']:checked").length - 1){
+					    valueArr += ","
+				    }
+			    });
+			    ExecDelete('{% url "accounts:user_collect_del" %}', valueArr, '#turl','#csrf');
+		    }
+        }
+    </script>
+
+        <h3 class="operate-title mt20">我的收藏</h3>
+        <div class="operate-items mt20">
+            <a class="j-item now" href="/user/favorite.html">我的收藏</a> 
+        </div>
+        <div class="redpack j-redpack" style="display:block;">
+            <table class="redpack-items">
+                <thead>
+                    <tr class="redpack-tr1">
+                        <th width="5%">选择</th>
+                        <th align="left" width="18%" >收藏文名称</th>
+                        <th width="5%" align="left">类别</th>
+                        <th width="10%" align="left">时间</th>
+                        <th width="5%">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in object_list %}
+                      {% with a=c.article %}
+                      <tr>
+                        <td width="20" align="center">
+                          <input name="checkId" class="checkall" type="checkbox" value="{{ c.id }}" >
+                        </td>
+                        <td><a target="_blank" href="{% url 'article:content' a.uid %}?num=0">{{ a.title }}</a></td>
+                        <td>{{ a.classify.name }}</td>
+                        <td>{{ c.created_at }}</td>
+                        <td align="center">
+                          <a onclick="ExecPostBack({{ c.id }});" href="javascript:;">删除</a>
+                        </td>
+                      </tr>
+                      {% endwith %}
+                       {% empty %}
+                            <tr><td colspan="5" align="center">暂无记录...</td></tr>
+                    {% endfor %}
+                 </tbody>
+            </table>
+            <div class="page-foot">
+                <div class="pagination">
+              <div class="list-page">
+                  <ul class="post-data">
+                      <li><a>共 {{ paginator.count }} 条</a></li>
+                  </ul>
+              </div>
+              <ul>
+                  {% if page_obj.has_previous %}
+                  <li class="active"><a href="{% url 'accounts:user_collect' %}?page={{ page_obj.previous_page_number }}">上一页</a></li>
+                  {% else %}
+                  <li class="active"><a href="javascript:valid(0);">上一页</a></li>
+                  {% endif %}
+                  {% for p in paginator.page_range %}
+                  <li><a href="{% url 'accounts:user_collect' %}?page={{ p }}">{{ p }}</a></li>
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                  <li class="active"><a href="{% url 'accounts:user_collect' %}?page={{ page_obj.next_page_number }}">下一页</a></li>
+                  {% else %}
+                  <li class="active"><a href="javascript:valid(0);">下一页</a></li>
+                  {% endif %}
+              </ul>
+          </div>
+{#              <div class="pagination"><div class="list-page"><ul class="post-data"><li><a>共 1 条</a></li></ul></div><ul><li class="active"><a>上一页</a></li><li><a>1</a></li><li class="active"><a>下一页</a></li></ul></div><!--放置页码列表-->#}
+              <div class="page-btns">
+                <a onclick="checkAll(this);" href="javascript:;">全选</a>
+                <span class="pipe">|</span>
+                <a onclick="ExecPostBack();" href="javascript:;">删除</a>
+              </div>
+            </div>
+        </div>
+        <input id="csrf" type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
+        <input id="turl" type="hidden" value="{% url 'accounts:user_collect' %}" /><!--存在跳转的URL值-->
+    </div>
+{% endblock %}
+    <!--/右侧内容-->
+<!--Footer-->
+<!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+
+<!---END 底部开始-->
+<!--/Footer-->
+{% block footjs %}
+<script type="text/javascript">
+    $(function () {
+        $(".myfavorite").addClass("demo-dd-a-now");
+    })
+    </script>
+{% endblock %}

@@ -1,0 +1,193 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    <title>{{ object.title }} - {{ object.classify.name }} - KevIn`s Blog</title>
+{% endblock %}
+{% block link %}
+    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css" />
+    <script type="text/javascript" charset="utf-8" src="/static/js/dialog-plus-min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/scripts/ckplayer/ckplayer.js"></script>
+    <script src="/static/js/common.js" type="text/javascript"></script>
+
+    <link href="/static/css/blueimp-gallery.min.css" rel="stylesheet" type="text/css" />
+    <script src="/static/js/jquery.blueimp-gallery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("nav").find("li").eq(8).addClass("nav-active");
+            //设置视频容器大小
+            winResize();
+            $(window).resize(function () {
+                winResize();
+            });
+            //初始化视频容器
+
+            initCKPlayer('video-box','{{ object.video }}', '/static/scripts/ckplayer/ckplayer.swf');
+          });
+        //改变大小函数
+        function winResize() {
+            var w = $(".video-box").parent().width();
+            var h = w * 9 / 16;
+            $(".video-box").width(w).height(h);
+        }
+</script>
+{% endblock %}
+<!--<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a085b9cd4641b33068c03a9dd42ed1af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>-->
+<!--导航开始-->
+
+<!--导航结束-->
+
+<!--/Header-->
+<!--主题框架开始-->
+<!--主题框架开始-->
+{% block content %}
+<div class="container">
+<!--左侧开始-->
+	<section>
+	    <article >
+            <h3 class="arc-title index-title">{{ object.title }}</h3>
+            <div class="post-line bg-color">
+			    <ul>
+				    <li><a title="wyb 发表于 {{ object.created_at }}"><i class="el-time icon-calendar"></i><time>{{ object.created_at }}</time></a></li>
+				    <li><a href="#" title="本文作者：wyb"><i class="el-user icon-user"></i>{{ object.user }}</a></li>
+				    <li><a title="浏览数"><i class="el-eye-open icon-eye"></i>(<em id="view">{{ object.view_count }}</em>)</a></li>
+			    </ul>
+		    </div>
+
+            <div class="article-content bg-color" id="arc-tj">
+
+			<!--文章正文-->
+                <div class="article-body img_loading lightBoxGallery">
+                    <p>
+	                    <div id="video-box" class="video-box"></div>
+                    </p>
+                    <p>{{ object.desc }}...</p>
+                    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" style="display: none;">
+                        <div class="slides" style="width: 41256px;"></div>
+                        <h3 class="title">图片</h3>
+                        <a class="prev" title="上一张">‹</a>
+                        <a class="next" title="下一张">›</a>
+                        <span class="close" title="关闭">×</span>
+                        <span class="play-pause" title="自动播放"></span>
+                        <ol class="indicator"></ol>
+                    </div>
+                </div>
+				<!--END 文章正文-->
+				<!-- 分享 -->
+
+{#                    <link rel="stylesheet" type="text/css" href="/static/css/ui-dialog.css" />#}
+{#<script type="text/javascript" charset="utf-8" src="/static/js/dialog-plus-min.js"></script>#}
+{#<script type="text/javascript">#}
+{#    $(function () {#}
+{#        bindFavorite('add', 'myblog', 'video', '163');#}
+{#    });#}
+{##}
+{#    //绑定按钮事件#}
+{#    function bindFavorite(action, site, channel, id) {#}
+{#        $('#myFavorite').bind('click', function () {#}
+{#            favoriteAdd(action, site, channel, id);#}
+{#        });#}
+{#    }#}
+
+{#    //提交收藏AJAX处理#}
+    {#function favoriteAdd(action, site, channel, id) {#}
+    {#    //提交操作#}
+    {#    $.ajax({#}
+    {#        type: 'GET',#}
+    {#        dataType: 'json',#}
+    {#        url: '/plugins/favorite/ajax.ashx',#}
+    {#        data: { "action": action, "site": site, "channel": channel, "id": id },#}
+    {#        timeout: 20000,#}
+    {#        success: function (data, textStatus) {#}
+    {#            if (data.status == 1) {#}
+    {#                $("#myFavorite").text("已收藏");#}
+    {#                $('#myFavorite').unbind("click"); //移除绑定事件#}
+    {#                var d = dialog({ content: data.msg }).show();#}
+    {#                setTimeout(function () {#}
+    {#                    d.close().remove();#}
+    {#                }, 2000);#}
+    {#            } else {#}
+    {#                dialog({ title: '提示', content: data.msg, okValue: '确定', ok: function () { } }).showModal();#}
+    {#            }#}
+    {##}
+    {#        },#}
+    {#        error: function (XMLHttpRequest, textStatus, errorThrown) {#}
+    {#            dialog({ title: '提示', content: "状态：" + textStatus + "；出错提示：" + errorThrown, okValue: '确定', ok: function () { } }).showModal();#}
+    {#        }#}
+    {#    });#}
+    {#    return false;#}
+    {# }#}
+{#</script>#}
+<div class="article-fx">
+{#<a id="myFavorite" class="sucai-fx"><i class="icon-umbrella"></i><script type="text/javascript" src="/static/js/ajax.js"></script></a>#}
+
+                    <a class="fx-btn img-circle" href="javascript:;" class="img-circle">分享</a>
+					<div class="bd-fx arc-bdfx">
+						<i class="el-remove fx-close"></i>
+						<ul class="bdsharebuttonbox">
+							<li><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></li>
+							<li><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a></li>
+							<li><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></li>
+							<li><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a></li>
+						</ul>
+						<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "32" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+					</div>
+				</div>
+				<!--END 分享-->
+			<hr>
+				<!--标签-->
+				<div class="article_tag">
+                    <ul >
+						<li><a href="{% url 'system:video_list' %}?type={{ object.classify.code }}" title="归类">{{ object.classify.name }}</a></li>
+                                {% for t in object.tag.all %}
+                                <li>
+                                <a href= "#" title="标签： {{ t.name }} "> {{ t.name }}</a>&nbsp;
+                                </li>
+                                {% endfor %}
+                    </ul>
+                </div>
+			</div>
+	    </article>
+        <!--视频来源-->
+	    <div class="shangyip bg-color">
+		    <span><i class="el-arrow-up"></i>视频来源:{{ object.source }}</span>
+	    </div>
+        <!--随机推荐-->
+        <div class="maybe-love">
+	        <h4 class="index-title"><i class="el-heart"></i>您还可能喜欢</h4>
+	        <ul>
+                <ul>
+                {% for v in video_list %}
+                <li>
+			        <a href="{% url 'system:video_show' v.uid %}">
+			            <img src="{{ v.img.url }}" alt="{{ v.title }}" title="{{ v.title }}">
+			            <span>{{ v.title }}</span>
+			        </a>
+		        </li>
+                {% empty %}
+                    <div class="nodata">暂无相关的视频...</div>
+                {% endfor %}
+	            </ul>
+
+	        </ul>
+        </div>
+      </section>
+{% include 'base/rside.html' %}
+</div>
+{% endblock %}
+    <!--Header-->
+    <!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+
+<!---END 底部开始-->
+    <!--/Header-->
+
