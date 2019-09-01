@@ -1,0 +1,92 @@
+{% extends 'base/base.html' %}
+{% load article_extras %}
+{% load highlight %}
+{% block title %}
+    <title>KevIn`s Blog</title>
+{% endblock %}
+<!--主题框架开始-->
+{% block content %}
+<div class="container">
+    <!--左侧开始-->
+	<section class="mysection">
+        <div class="arclist">
+            <!--取得一个DataTable-->
+            
+            <!--取得分页页码列表-->
+            
+            <h4 class="search-title bg-color"><a href="#"><i class="el-certificate"></i>全站标签检索：<font color="#DC4900">{{ tag_name }}</font></a><span style="float:right;">共有 <b class="red">{{ paginator.count }}</b> 条记录</span></h4>
+			<!--列表开始-->
+            
+            <ul>
+                {% for result in object_list %}
+                <li>
+					<div class="arcimg">
+					    <img src="{{ result.img.url }}">
+					</div>
+					<div class="arc-right">
+						<h4 class="blue-text"><a href="{% url 'article:content' result.uid %}?num=0">{{ result.title }}</a></h4>
+						<p>{{ result.content|content_len }}</p>
+						<ul>
+							<li><a title=" {{ result.created_at }} 发表 "><i class="icon-calendar"></i><em>{{ result.created_at|date:'Y-m-d H:m:s' }}</em></a></li>
+							
+							<li><a href="#" title="评论数"><i class="icon-speech" i="{{ result.comment.all.count }}"></i><em>{{ result.comment.all.count }}</em></a></li>
+							<li><a title="浏览数"><i class="icon-eye" i="{{ result.view_count }}"></i><em>{{ result.view_count }}</em></a></li>
+							<li><a href="{% url 'article:article_list' %}?type={{ result.classify.code }}" title="查看分类"><i class="fa fa-th-list"></i>{{ result.classify.name }}</a></li>
+						</ul>
+					</div>
+				</li>
+                {% empty %}
+                <li>没有找到相关内容</li>
+                {% endfor %}
+			</ul>
+            
+			<!--列表结束-->
+        </div>
+        <div class="pagination">
+              <div class="list-page">
+                  <ul class="post-data">
+                      <li><a>共 {{ paginator.count }} 条</a></li>
+                  </ul>
+              </div>
+              <ul>
+                  {% if page_obj.has_previous %}
+                  <li class="active"><a href="{% url 'system:tag_list' %}?tag={{ tag_uid }}&page={{ page_obj.previous_page_number }}">上一页</a></li>
+                  {% else %}
+                  <li class="active"><a href="javascript:valid(0);">上一页</a></li>
+                  {% endif %}
+                  {% for p in paginator.page_range %}
+                  <li><a href="{% url 'system:tag_list' %}?tag={{ tag_uid }}&page={{ p }}">{{ p }}</a></li>
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                  <li class="active"><a href="{% url 'system:tag_list' %}?tag={{ tag_uid }}&page={{ page_obj.next_page_number }}">下一页</a></li>
+                  {% else %}
+                  <li class="active"><a href="javascript:valid(0);">下一页</a></li>
+                  {% endif %}
+              </ul>
+          </div>
+    </section>
+    <!--左侧结束-->
+    <!--右侧-->
+    <script type="text/javascript" src="/static/js/common.js"></script>
+    
+<!--=========右侧开始==========-->
+{% include 'base/rside.html' %}
+<!--=========右侧结束==========-->
+    <!--/右侧-->
+</div>
+{% endblock %}
+    <!--Header-->
+    <!---底部开始-->
+
+<!---返回顶部-->
+<!--换肤--->
+
+
+<!---END 底部开始-->
+    <!--/Header-->
+{% block footjs %}
+    <script type="text/javascript">
+        ajaxEash(".icon-speech", "/", 0);
+        ajaxEash(".icon-eye", "/", 1);
+    </script>
+{% endblock %}
